@@ -35,7 +35,6 @@ addEventListener("message", function (event) {
                 distanceLeft: distanceLeft,
                 rotate: '',
                 onScreen: false,
-                isVisible: true,
             }
         }
         if (gpsLocations[event.data.id].onScreen !== event.data.onScreen) {
@@ -104,11 +103,15 @@ addEventListener("message", function (event) {
         // console.log("Icon Width:", `${iconWidth}px`)
     } else if (event.data.action == 'showAllMarkers') {
         for (const location in gpsLocations) {
-            if (location) gpsLocations[location].moveGPS.style.display = '';
+            if (location) {
+                gpsLocations[location].moveGPS.style.display = '';
+            }
         }
     } else if (event.data.action == 'hideAllMarkers') {
         for (const location in gpsLocations) {
-            if (location) gpsLocations[location].moveGPS.style.display = 'none';
+            if (location) {
+                gpsLocations[location].moveGPS.style.display = 'none';
+            }
         }
     } else if (event.data.action == 'cleanAllMarkers') {
         gpsLocations = {};
@@ -116,16 +119,8 @@ addEventListener("message", function (event) {
         gpsLocations[event.data.id].moveGPS.remove();
         gpsLocations[event.data.id] = undefined;
     } else if (event.data.action == 'showSpecificMarker') {
-        if (gpsLocations[event.data.id].isVisible) {
-            gpsLocations[event.data.id].isVisible = false;
-            gpsLocations[event.data.id].moveGPS.display = '';
-        }
+        gpsLocations[event.data.id].moveGPS.style.display = '';
     } else if (event.data.action == 'hideSpecificMarker') {
-        console.log("hideSpecificMarker ?", event.data.id)
-        if (gpsLocations[event.data.id].isVisible) {
-            console.log("hideSpecificMarker worked", event.data.id)
-            gpsLocations[event.data.id].isVisible = false;
-            gpsLocations[event.data.id].moveGPS.display = 'none';
-        }
+        gpsLocations[event.data.id].moveGPS.style.display = 'none';
     }
 });
