@@ -67,6 +67,7 @@ end)
 RegisterNetEvent('ui-marker:client:add-marker')
 AddEventHandler('ui-marker:client:add-marker', function(markerName, markerPosition)
     Config.targetCoords[markerName] = markerPosition
+    -- When markers update they arleady get created if they dont exist by the UI
     print("Marker added with id:", markerName)
 end)
 
@@ -74,6 +75,7 @@ RegisterNetEvent('ui-marker:client:remove-marker')
 AddEventHandler('ui-marker:client:remove-marker', function(markerName)
     if Config.targetCoords[markerName] then
         Config.targetCoords[markerName] = nil
+        SendNUIMessage({ action = "removeSpecificMarker", id = markerName })
         print("Marker removed!")
     else
         print("Marker not found!")

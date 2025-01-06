@@ -4,6 +4,7 @@ RegisterCommand("add-marker", function(source, args, rawCommand)
     local player = source
     local ped = GetPlayerPed(player)
     local coords = GetEntityCoords(ped)
+    testCount = testCount + 1
     TriggerClientEvent('ui-marker:client:add-marker', source, "testmarker" .. testCount, coords)
 end, true)
 

@@ -101,14 +101,16 @@ addEventListener("message", function (event) {
         }
     } else if (event.data.action == 'showAllMarkers') {
         for (const location in gpsLocations) {
-            gpsLocations[location].moveGPS.style.display = '';
+            if (location) gpsLocations[location].moveGPS.style.display = '';
         }
     } else if (event.data.action == 'hideAllMarkers') {
         for (const location in gpsLocations) {
-            gpsLocations[location].moveGPS.style.display = 'none';
+            if (location) gpsLocations[location].moveGPS.style.display = 'none';
         }
     } else if (event.data.action == 'cleanAllMarkers') {
         gpsLocations = {};
+    } else if (event.data.action == 'removeSpecificMarker') {
+        gpsLocations[event.data.id] = undefined;
     } else if (event.data.action == 'showSpecificMarkers') {
         if (gpsLocations[event.data.id].isVisible) { // WIP
             gpsLocations[event.data.id].isVisible = false;
