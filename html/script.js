@@ -119,12 +119,12 @@ addEventListener("message", function (event) {
     } else if (event.data.action == 'removeSpecificMarker') {
         gpsLocations[event.data.id].moveGPS.remove();
         gpsLocations[event.data.id] = undefined;
-    } else if (event.data.action == 'showSpecificMarkers') {
+    } else if (event.data.action == 'showSpecificMarker') {
         if (gpsLocations[event.data.id].isVisible) {
             gpsLocations[event.data.id].isVisible = false;
             gpsLocations[event.data.id].moveGPS.show();
         }
-    } else if (event.data.action == 'hideSpecificMarkers') {
+    } else if (event.data.action == 'hideSpecificMarker') {
         if (gpsLocations[event.data.id].isVisible) {
             gpsLocations[event.data.id].isVisible = false;
             gpsLocations[event.data.id].moveGPS.hide();
