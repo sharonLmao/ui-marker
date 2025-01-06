@@ -17,4 +17,7 @@ body {
   position: absolute;
   margin-left: -15px;
   width: 100px;
+  color: white;
+  font-weight: bold;
+  font-family: 'Oxygen';
 }
