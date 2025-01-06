@@ -28,6 +28,26 @@ RegisterCommand("hide-markers", function(source, args, rawCommand)
     TriggerClientEvent('ui-marker:client:hide-markers', source)
 end, false)
 
+-- Show Specific Markers:
+RegisterCommand("show-marker", function(source, args, rawCommand)
+    if #args < 1 then
+        print("Missing name!")
+        return
+    end
+    local name = args[1]
+    TriggerClientEvent('ui-marker:client:show-marker', source, name)
+end, false)
+
+-- Hide Specific Markers:
+RegisterCommand("hide-marker", function(source, args, rawCommand)
+    if #args < 1 then
+        print("Missing name!")
+        return
+    end
+    local name = args[1]
+    TriggerClientEvent('ui-marker:client:hide-marker', source, name)
+end, false)
+
 -- Delete All Markers:
 RegisterCommand("clean-markers", function(source, args, rawCommand)
     TriggerClientEvent('ui-marker:client:clean-markers', source)

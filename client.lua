@@ -76,9 +76,29 @@ AddEventHandler('ui-marker:client:remove-marker', function(markerName)
     if Config.targetCoords[markerName] then
         Config.targetCoords[markerName] = nil
         SendNUIMessage({ action = "removeSpecificMarker", id = markerName })
-        print("Marker removed!")
+        print(markerName, "Marker removed!")
     else
-        print("Marker not found!")
+        print(markerName, "Marker not found!")
+    end
+end)
+
+RegisterNetEvent('ui-marker:client:show-marker')
+AddEventHandler('ui-marker:client:show-marker', function(markerName)
+    if Config.targetCoords[markerName] then
+        SendNUIMessage({ action = "showSpecificMarker", id = markerName })
+        print(markerName, "Marker shown!")
+    else
+        print(markerName, "Marker not found!")
+    end
+end)
+
+RegisterNetEvent('ui-marker:client:hide-marker')
+AddEventHandler('ui-marker:client:hide-marker', function(markerName)
+    if Config.targetCoords[markerName] then
+        SendNUIMessage({ action = "hideSpecificMarker", id = markerName })
+        print(markerName, "Marker hidden!")
+    else
+        print(markerName, "Marker not found!")
     end
 end)
 
