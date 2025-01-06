@@ -9,6 +9,7 @@ shared_scripts {
 }
 
 client_scripts {
+	'utils.lua',
 	'client.lua'
 }
 

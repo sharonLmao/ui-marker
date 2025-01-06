@@ -1,38 +1,38 @@
-function PrintDistanceToTarget(distance)
-    if ShouldUseMetricMeasurements() then
-        if distance >= 1000 then
-            local distanceInKm = distance / 1000
-            return string.format("%.2f km", distanceInKm)
-        else
-            return string.format("%d m", math.floor(distance))
+local isDisplaying = true
+
+-- Citizen.CreateThread(function()
+--     while true do
+--         local ped = PlayerPedId()
+--         local pedCo = GetEntityCoords(ped)
+--         local sleep = 1000
+--         for _, targetCoords in ipairs(Config.targetCoords) do
+--             local placeDist = #(pedCo - targetCoords)
+--             if placeDist <= 1.2 then
+--                 sleep = 7
+--             end
+--         end
+--         Citizen.Wait(sleep)
+--     end
+-- end)
+
+Citizen.CreateThread(function()
+    while true do
+        if NetworkIsPlayerActive(PlayerId()) then
+            print("Player has logged in.")
+            break
         end
-    else
-        if distance >= 1609.34 then
-            local distanceInMiles = distance / 1609.34
-            return string.format("%.2f mi", distanceInMiles)
-        else
-            local distanceInFeet = distance * 3.28084
-            return string.format("%d ft", math.floor(distanceInFeet))
-        end
+        Citizen.Wait(500) -- Check every 500ms
     end
-end
+end)
 
-function DrawText3D(coords, text)
-    SetDrawOrigin(coords.x, coords.y, coords.z, 0)
-    SetTextScale(0.35, 0.35)
-    SetTextFont(4)
-    SetTextProportional(1)
-    SetTextColour(255, 255, 255, 215)
-    SetTextEntry("STRING")
-    SetTextCentre(1)
-    AddTextComponentString(text)
-    DrawText(0.0, 0.0)
-    ClearDrawOrigin()
-end
+RegisterNetEvent('ui-marker:client:sync-markers')
+AddEventHandler('ui-marker:client:sync-markers', function(newMarkers)
+    Config.targetCoords = newMarkers
+end)
 
-RegisterNetEvent("ui-marker:client:add-marker")
-AddEventHandler("ui-marker:client:add-marker", function()
-    local isDisplaying = true
+function StartShowingMarkers()
+    isDisplaying = true
+    SendNUIMessage({ toggle = true })
     local lastXXX = 0
     local lastYYY = 0
     local playerCoords = vector3(0, 0, 0)
@@ -41,47 +41,60 @@ AddEventHandler("ui-marker:client:add-marker", function()
         while isDisplaying do
             Citizen.Wait(0)
             playerCoords = GetEntityCoords(PlayerPedId())
-            distance = #(playerCoords - Config.targetCoords)
-            if distance < 25.0 then
-                DrawText3D(Config.targetCoords, "[E] ")
-            end
-            local onScreen, xxx, yyy =
-                GetHudScreenPositionFromWorldPosition(
-                    2829.993896,
-                    1474.732544,
-                    24.555395)
-            if onScreen == 1 then -- up
-                yyy = 0
-            end
-            if onScreen == 2 then -- right
-                xxx = 1
-            end
-            if onScreen == 3 then -- down
-                yyy = 1
-            end
-            if onScreen == 4 then -- left
-                xxx = 0
-            end
-            if lastXXX ~= xxx or lastYYY ~= yyy then
-                lastXXX = xxx
-                lastYYY = yyy
-                SendNUIMessage({
-                    toggle = true,
-                    xxx = xxx * 100,
-                    yyy = yyy * 100,
-                    distance = distance,
-                    onScreen = onScreen,
-                    left = PrintDistanceToTarget(distance)
-                })
+            for name, targetCoords in pairs(Config.targetCoords) do
+                distance = #(playerCoords - targetCoords)
+                if distance < 25.0 then
+                    DrawText3D(targetCoords, "[E] " .. name)
+                end
+                local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(targetCoords.x, targetCoords.y, targetCoords.z)
+                if onScreen == 1 then -- up
+                    yyy = 0
+                end
+                if onScreen == 2 then -- right
+                    xxx = 1
+                end
+                if onScreen == 3 then -- down
+                    yyy = 1
+                end
+                if onScreen == 4 then -- left
+                    xxx = 0
+                end
+                if lastXXX ~= xxx or lastYYY ~= yyy then
+                    lastXXX = xxx
+                    lastYYY = yyy
+                    SendNUIMessage({
+                        toggle = true,
+                        xxx = xxx * 100,
+                        yyy = yyy * 100,
+                        distance = distance,
+                        onScreen = onScreen,
+                        left = PrintDistanceToTarget(distance)
+                    })
+                end
             end
         end
         if isDisplaying == false then
             SendNUIMessage({ toggle = false })
         end
     end)
-    Citizen.CreateThread(function()
-        Citizen.Wait(100000)
+end
+
+-- RegisterNetEvent("ui-marker:client:add-marker")
+-- AddEventHandler("ui-marker:client:add-marker", function(targetCoords)
+--     if not isDisplaying then
+--         StartShowingMarkers()
+--     end
+-- end)
+
+RegisterCommand("show-markers", function(source, args, rawCommand)
+    if not isDisplaying then
+        StartShowingMarkers()
+    end
+end, false)
+
+RegisterCommand("hide-markers", function(source, args, rawCommand)
+    if isDisplaying then
         isDisplaying = false
         SendNUIMessage({ toggle = false })
-    end)
-end)
+    end
+end, false)
