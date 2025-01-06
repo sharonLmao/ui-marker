@@ -8,6 +8,4 @@ This script serves as an optimized replacement for the traditional 3D marker. It
 
 **Created by**: Sharon and Burgil
 
----
-
-This version makes it more concise and clear, while adding appropriate formatting for a GitHub README. Let me know if you'd like to adjust anything further!
+--- lol
