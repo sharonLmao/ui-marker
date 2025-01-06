@@ -100,14 +100,14 @@ addEventListener("message", function (event) {
             gpsLocations[event.data.id].isVisible = true;
         }
     } else if (event.data.action == 'showAllMarkers') {
-        for (const location of gpsLocations) {
-            location.moveGPS.style.display = '';
+        for (const location in gpsLocations) {
+            gpsLocations[location].moveGPS.style.display = '';
         }
     } else if (event.data.action == 'hideAllMarkers') {
-        for (const location of gpsLocations) {
-            location.moveGPS.style.display = 'none';
+        for (const location in gpsLocations) {
+            gpsLocations[location].moveGPS.style.display = 'none';
         }
-    } else if (event.data.action == 'removeAllMarkers') {
+    } else if (event.data.action == 'cleanAllMarkers') {
         gpsLocations = {};
     } else if (event.data.action == 'showSpecificMarkers') {
         if (gpsLocations[event.data.id].isVisible) { // WIP

@@ -1,36 +1,5 @@
 local isDisplaying = true
 
--- Citizen.CreateThread(function()
---     while true do
---         local ped = PlayerPedId()
---         local pedCo = GetEntityCoords(ped)
---         local sleep = 1000
---         for _, targetCoords in ipairs(Config.targetCoords) do
---             local placeDist = #(pedCo - targetCoords)
---             if placeDist <= 1.2 then
---                 sleep = 7
---             end
---         end
---         Citizen.Wait(sleep)
---     end
--- end)
-
-Citizen.CreateThread(function()
-    while true do
-        if NetworkIsPlayerActive(PlayerId()) then
-            print("Player has logged in.")
-            break
-        end
-        Citizen.Wait(500)
-    end
-    StartShowingMarkers()
-end)
-
-RegisterNetEvent('ui-marker:client:sync-markers')
-AddEventHandler('ui-marker:client:sync-markers', function(newMarkers)
-    Config.targetCoords = newMarkers
-end)
-
 function StartShowingMarkers()
     local lastXXX = 0
     local lastYYY = 0
@@ -76,11 +45,39 @@ function StartShowingMarkers()
     end)
 end
 
+Citizen.CreateThread(function()
+    while true do
+        if NetworkIsPlayerActive(PlayerId()) then
+            print("Player has logged in.")
+            break
+        end
+        Citizen.Wait(500)
+    end
+    StartShowingMarkers()
+end)
+
+RegisterNetEvent('ui-marker:client:add-marker')
+AddEventHandler('ui-marker:client:add-marker', function(markerName, markerPosition)
+    Config.targetCoords[markerName] = markerPosition
+    print("Marker added with id:", markerName)
+end)
+
+RegisterNetEvent('ui-marker:client:remove-marker')
+AddEventHandler('ui-marker:client:remove-marker', function(markerName)
+    if Config.targetCoords[markerName] then
+        Config.targetCoords[markerName] = nil
+        print("Marker removed!")
+    else
+        print("Marker not found!")
+    end
+end)
+
 RegisterNetEvent("ui-marker:client:show-markers")
 AddEventHandler("ui-marker:client:show-markers", function()
     if not isDisplaying then
         isDisplaying = true
         StartShowingMarkers()
+        print("Show all markers")
     end
 end)
 
@@ -89,6 +86,7 @@ AddEventHandler("ui-marker:client:hide-markers", function()
     if isDisplaying then
         isDisplaying = false
         SendNUIMessage({ action = "hideAllMarkers" })
+        print("Hide all markers")
     end
 end)
 
@@ -96,6 +94,7 @@ RegisterNetEvent("ui-marker:client:clean-markers")
 AddEventHandler("ui-marker:client:clean-markers", function()
     if isDisplaying then
         isDisplaying = false
-        SendNUIMessage({ action = "removeAllMarkers" })
+        SendNUIMessage({ action = "cleanAllMarkers" })
+        print("Deleted all markers")
     end
 end)

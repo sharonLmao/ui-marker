@@ -4,10 +4,7 @@ RegisterCommand("add-marker", function(source, args, rawCommand)
     local player = source
     local ped = GetPlayerPed(player)
     local coords = GetEntityCoords(ped)
-    testCount = testCount + 1
-    Config.targetCoords["testmarker"..testCount] = coords
-    TriggerClientEvent('ui-marker:client:sync-markers', -1, Config.targetCoords)
-    print("test marker added with id:", "testmarker"..testCount)
+    TriggerClientEvent('ui-marker:client:add-marker', source, "testmarker" .. testCount, coords)
 end, true)
 
 -- Remove Marker by Name:
@@ -17,12 +14,7 @@ RegisterCommand("remove-marker", function(source, args, rawCommand)
         return
     end
     local name = args[1]
-    if Config.targetCoords[name] then
-        Config.targetCoords[name] = nil
-        TriggerClientEvent('ui-marker:client:sync-markers', -1, Config.targetCoords)
-    else
-        print("Marker not found!")
-    end
+    TriggerClientEvent('ui-marker:client:remove-marker', source, name)
 end, true)
 
 -- Show All Markers:
