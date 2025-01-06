@@ -1,8 +1,9 @@
+const moveGPS = document.getElementById("moveGPS");
+const gpsIcon = document.getElementById("gpsIcon");
 let isVisible = false;
 let onScreen = false;
 let rotate = '';
-const moveGPS = document.getElementById("moveGPS");
-const iconContainer = document.querySelector(".icon-container");
+
 addEventListener("message", function (event) {
     if (event.data.toggle == true) {
         const distance = parseFloat(event.data.distance);
@@ -31,8 +32,8 @@ addEventListener("message", function (event) {
         } else {
             moveGPS.style.transform = `translate3d(${event.data.xxx}vw, ${event.data.yyy}vh, 0)` + rotate;
         }
-        const scaleFactor = 0.17 + (300 - distance) / 300; // Scale factor ranges from 0.17 to 1.17
-        iconContainer.style.transform = `scale(${Math.max(scaleFactor, 0.6)})`;
+        const scaleFactor = 0.17 + (300 - distance) / 300;
+        gpsIcon.style.width = Math.max(scaleFactor, 0.6);
         if (!isVisible) {
             $("#moveGPS").show();
             isVisible = true;

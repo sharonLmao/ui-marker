@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap');
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -8,17 +9,6 @@ html, body {
   height: 100vh;
 }
 
-.icon-container {
-  width: 30px;
-  transition: transform .16s linear;
-}
-
-.text-container {
-  padding: 5px;
-  padding-top: 5px;
-  padding-left: 8px;
-  font-family: Gill Sans, sans-serif;
-  letter-spacing: 1px;
-  font-weight: 400;
-
+#moveGPS {
+  position: absolute;
 }

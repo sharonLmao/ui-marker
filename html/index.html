@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-        <link rel="stylesheet" href="main.css">
-        <style>
-            #moveGPS {
-                /* transition: transform 0.03s linear; */
-                position: absolute;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="data">
-            <div style="display: none; translate3d(0vw, 0vh, 0);" id="moveGPS">
-                <div><img class="icon-container" src="location.svg" /></div>
-            </div>
-        </div>
-        <script src="script.js"></script>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div style="display: none; transform: translate3d(0vw, 0vh, 0);" id="moveGPS">
+        <img style="width: 30px; display: block;" id="gpsIcon" src="location.svg" />
+    </div>
+    <script src="script.js"></script>
+</body>
+
 </html>

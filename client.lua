@@ -21,8 +21,6 @@ function DrawText3D(coords, text)
     ClearDrawOrigin()
 end
 
-local targetCoords = vector3(2829.993896, 1474.732544, 24.555395)
-
 RegisterNetEvent("ui-marker:client:add-marker")
 AddEventHandler("ui-marker:client:add-marker", function()
     local isDisplaying = true
@@ -34,9 +32,9 @@ AddEventHandler("ui-marker:client:add-marker", function()
         while isDisplaying do
             Citizen.Wait(0)
             playerCoords = GetEntityCoords(PlayerPedId())
-            distance = #(playerCoords - targetCoords)
+            distance = #(playerCoords - Config.targetCoords)
             if distance < 25.0 then
-                DrawText3D(targetCoords, "[E] ")
+                DrawText3D(Config.targetCoords, "[E] ")
             end
             local onScreen, xxx, yyy =
                 GetHudScreenPositionFromWorldPosition(
