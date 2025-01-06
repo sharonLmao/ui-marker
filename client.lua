@@ -21,7 +21,8 @@ Citizen.CreateThread(function()
             print("Player has logged in.")
             break
         end
-        Citizen.Wait(500) -- Check every 500ms
+        Citizen.Wait(500)
+        StartShowingMarkers()
     end
 end)
 
