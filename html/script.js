@@ -21,6 +21,7 @@ addEventListener("message", function (event) {
             distanceLeft.style.top = 'calc(100% + 5px)';
             distanceLeft.classList.add("distanceLeft");
             moveGPS.appendChild(distanceLeft);
+            document.body.append(moveGPS);
             gpsLocations[event.data.id] = {
                 moveGPS: moveGPS,
                 gpsIcon: gpsIcon,
