@@ -110,6 +110,7 @@ addEventListener("message", function (event) {
     } else if (event.data.action == 'cleanAllMarkers') {
         gpsLocations = {};
     } else if (event.data.action == 'removeSpecificMarker') {
+        gpsLocations[event.data.id].moveGPS.remove();
         gpsLocations[event.data.id] = undefined;
     } else if (event.data.action == 'showSpecificMarkers') {
         if (gpsLocations[event.data.id].isVisible) { // WIP
