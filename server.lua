@@ -1,5 +1,3 @@
-RegisterCommand("me", function(source, args, rawCommand)
-    local text = table.concat(args, ' ')
-    text = string.sub(text, 1, Config.MaxLength)
-    TriggerClientEvent('2d:waypoints', -1, text, source)
+RegisterCommand("test-marker", function(source, args, rawCommand)
+    TriggerClientEvent('ui-marker:client:add-marker', source)
 end, false)
