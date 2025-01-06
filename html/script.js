@@ -1,7 +1,7 @@
 const gpsLocations = {};
 
 addEventListener("message", function (event) {
-    if (event.data.toggle == true) {
+    if (event.data.action == 'moveMarkers') {
         const distance = parseFloat(event.data.distance);
         const scaleFactor = 0.17 + (300 - distance) / 300;
         const iconWidth = Math.max(scaleFactor, 0.6);
@@ -99,8 +99,25 @@ addEventListener("message", function (event) {
             gpsLocations[event.data.id].moveGPS.show();
             gpsLocations[event.data.id].isVisible = true;
         }
-    } else if (gpsLocations[event.data.id].isVisible) {
-        gpsLocations[event.data.id].isVisible = false;
-        gpsLocations[event.data.id].moveGPS.hide();
+    } else if (event.data.action == 'showAllMarkers') {
+        for (const location of gpsLocations) {
+            location.moveGPS.style.display = '';
+        }
+    } else if (event.data.action == 'hideAllMarkers') {
+        for (const location of gpsLocations) {
+            location.moveGPS.style.display = 'none';
+        }
+    } else if (event.data.action == 'removeAllMarkers') {
+        gpsLocations = {};
+    } else if (event.data.action == 'showSpecificMarkers') {
+        if (gpsLocations[event.data.id].isVisible) { // WIP
+            gpsLocations[event.data.id].isVisible = false;
+            gpsLocations[event.data.id].moveGPS.show();
+        }
+    } else if (event.data.action == 'hideSpecificMarkers') {
+        if (gpsLocations[event.data.id].isVisible) { // WIP
+            gpsLocations[event.data.id].isVisible = false;
+            gpsLocations[event.data.id].moveGPS.hide();
+        }
     }
 });

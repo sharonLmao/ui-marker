@@ -1,4 +1,4 @@
-local isDisplaying = false
+local isDisplaying = true
 
 -- Citizen.CreateThread(function()
 --     while true do
@@ -23,9 +23,7 @@ Citizen.CreateThread(function()
         end
         Citizen.Wait(500)
     end
-    if not isDisplaying then
-        StartShowingMarkers()
-    end
+    StartShowingMarkers()
 end)
 
 RegisterNetEvent('ui-marker:client:sync-markers')
@@ -34,8 +32,6 @@ AddEventHandler('ui-marker:client:sync-markers', function(newMarkers)
 end)
 
 function StartShowingMarkers()
-    isDisplaying = true
-    SendNUIMessage({ toggle = true })
     local lastXXX = 0
     local lastYYY = 0
     local playerCoords = vector3(0, 0, 0)
@@ -66,8 +62,8 @@ function StartShowingMarkers()
                     lastXXX = xxx
                     lastYYY = yyy
                     SendNUIMessage({
+                        action = "moveMarkers",
                         id = name,
-                        toggle = true,
                         xxx = xxx * 100,
                         yyy = yyy * 100,
                         distance = distance,
@@ -77,28 +73,29 @@ function StartShowingMarkers()
                 end
             end
         end
-        if isDisplaying == false then
-            SendNUIMessage({ toggle = false })
-        end
     end)
 end
 
--- RegisterNetEvent("ui-marker:client:add-marker")
--- AddEventHandler("ui-marker:client:add-marker", function(targetCoords)
---     if not isDisplaying then
---         StartShowingMarkers()
---     end
--- end)
-
-RegisterCommand("show-markers", function(source, args, rawCommand)
+RegisterNetEvent("ui-marker:client:show-markers")
+AddEventHandler("ui-marker:client:show-markers", function()
     if not isDisplaying then
+        isDisplaying = true
         StartShowingMarkers()
     end
-end, false)
+end)
 
-RegisterCommand("hide-markers", function(source, args, rawCommand)
+RegisterNetEvent("ui-marker:client:hide-markers")
+AddEventHandler("ui-marker:client:hide-markers", function()
     if isDisplaying then
         isDisplaying = false
-        SendNUIMessage({ toggle = false })
+        SendNUIMessage({ action = "hideAllMarkers" })
     end
-end, false)
+end)
+
+RegisterNetEvent("ui-marker:client:clean-markers")
+AddEventHandler("ui-marker:client:clean-markers", function()
+    if isDisplaying then
+        isDisplaying = false
+        SendNUIMessage({ action = "removeAllMarkers" })
+    end
+end)
