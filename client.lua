@@ -1,4 +1,4 @@
-local isDisplaying = true
+local isDisplaying = false
 
 -- Citizen.CreateThread(function()
 --     while true do
