@@ -15,9 +15,11 @@ body {
 
 #distanceLeft {
   position: absolute;
-  margin-left: -15px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100px;
   color: white;
   font-weight: bold;
   font-family: 'Oxygen';
+  text-align: center;
 }
