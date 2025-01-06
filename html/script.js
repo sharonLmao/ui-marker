@@ -123,7 +123,7 @@ addEventListener("message", function (event) {
     } else if (event.data.action == 'hideSpecificMarker') {
         if (gpsLocations[event.data.id].isVisible) {
             gpsLocations[event.data.id].isVisible = false;
-            gpsLocations[event.data.id].moveGPS.hide();
+            gpsLocations[event.data.id].moveGPS.display = 'none';
         }
     }
 });
