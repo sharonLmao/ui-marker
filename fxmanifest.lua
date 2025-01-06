@@ -4,7 +4,6 @@ lua54 'yes'
 
 ui_page "html/index.html"
 
-
 shared_scripts {
 	'config.lua'
 }
@@ -16,7 +15,6 @@ client_scripts {
 server_scripts {
 	'server.lua'
 }
-
 
 files {
 	'html/*',
