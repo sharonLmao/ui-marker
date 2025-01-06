@@ -102,10 +102,6 @@ addEventListener("message", function (event) {
         }
         // gpsLocations[event.data.id].gpsIcon.style.width = `${iconWidth}px`;
         // console.log("Icon Width:", `${iconWidth}px`)
-        if (!gpsLocations[event.data.id].isVisible) {
-            gpsLocations[event.data.id].moveGPS.show();
-            gpsLocations[event.data.id].isVisible = true;
-        }
     } else if (event.data.action == 'showAllMarkers') {
         for (const location in gpsLocations) {
             if (location) gpsLocations[location].moveGPS.style.display = '';
@@ -122,7 +118,7 @@ addEventListener("message", function (event) {
     } else if (event.data.action == 'showSpecificMarker') {
         if (gpsLocations[event.data.id].isVisible) {
             gpsLocations[event.data.id].isVisible = false;
-            gpsLocations[event.data.id].moveGPS.show();
+            gpsLocations[event.data.id].moveGPS.display = '';
         }
     } else if (event.data.action == 'hideSpecificMarker') {
         if (gpsLocations[event.data.id].isVisible) {
