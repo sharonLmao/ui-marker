@@ -13,32 +13,32 @@ addEventListener("message", function (event) {
         if (onScreen !== event.data.onScreen) {
             if (event.data.onScreen == '1') { // top
                 rotate = ' rotate(180deg)';
-                distanceLeft.style.top = 'unset'
+                distanceLeft.style.top = 'calc(-100%)'
                 distanceLeft.style.bottom = 'unset'
-                distanceLeft.style.left = 'unset'
+                distanceLeft.style.left = '-35px'
                 distanceLeft.style.right = 'unset'
                 distanceLeft.style.transform = 'rotate(180deg)'
             }
             if (event.data.onScreen == '2') { // right
                 rotate = ' rotate(270deg)';
                 distanceLeft.style.top = 'unset'
-                distanceLeft.style.bottom = 'unset'
-                distanceLeft.style.left = '10px'
+                distanceLeft.style.bottom = 'calc(100% + 25px)'
+                distanceLeft.style.left = '-35px'
                 distanceLeft.style.right = 'unset'
-                distanceLeft.style.transform = 'rotate(270deg)'
+                distanceLeft.style.transform = 'rotate(90deg)'
             }
             if (event.data.onScreen == '3') { // bottom
                 rotate = ' rotate(0deg)';
-                distanceLeft.style.top = '10px'
+                distanceLeft.style.top = 'calc(-100%)'
                 distanceLeft.style.bottom = 'unset'
-                distanceLeft.style.left = 'unset'
+                distanceLeft.style.left = '-35px'
                 distanceLeft.style.right = 'unset'
                 distanceLeft.style.transform = 'rotate(0deg)'
             }
             if (event.data.onScreen == '4') { // left
                 rotate = 'rotate(90deg)';
                 distanceLeft.style.top = 'unset'
-                distanceLeft.style.bottom = 'calc(100% + 50px)'
+                distanceLeft.style.bottom = 'calc(100% + 25px)'
                 distanceLeft.style.left = 'unset'
                 distanceLeft.style.right = '-35px'
                 distanceLeft.style.transform = 'rotate(270deg)'
@@ -51,7 +51,7 @@ addEventListener("message", function (event) {
             distanceLeft.style.top = 'calc(100% + 5px)'
             distanceLeft.style.bottom = 'unset'
             distanceLeft.style.left = 'unset'
-            distanceLeft.style.right = 'unset'
+            distanceLeft.style.right = '-35px'
             distanceLeft.style.transform = 'rotate(0deg)'
             onScreen = false;
         }
