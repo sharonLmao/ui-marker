@@ -22,9 +22,9 @@ Citizen.CreateThread(function()
             break
         end
         Citizen.Wait(500)
-        if not isDisplaying then
-            StartShowingMarkers()
-        end
+    end
+    if not isDisplaying then
+        StartShowingMarkers()
     end
 end)
 
