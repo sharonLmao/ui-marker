@@ -1,85 +1,105 @@
-const moveGPS = document.getElementById("moveGPS");
-const gpsIcon = document.getElementById("gpsIcon");
-const distanceLeft = document.getElementById("distanceLeft");
-let isVisible = false;
-let onScreen = false;
-let rotate = '';
+const gpsLocations = {};
 
 addEventListener("message", function (event) {
     if (event.data.toggle == true) {
         const distance = parseFloat(event.data.distance);
         const scaleFactor = 0.17 + (300 - distance) / 300;
         const iconWidth = Math.max(scaleFactor, 0.6);
-        if (onScreen !== event.data.onScreen) {
+        if (!gpsLocations[event.data.id]) {
+            const moveGPS = document.createElement("div");
+            moveGPS.style.display = '';
+            moveGPS.style.transform = 'translate3d(0vw, 0vh, 0)';
+            moveGPS.classList.add("moveGPS");
+            const gpsIcon = document.createElement("img");
+            gpsIcon.style.width = '30px';
+            gpsIcon.style.display = 'block';
+            gpsIcon.src = 'location.svg';
+            gpsIcon.classList.add("gpsIcon");
+            moveGPS.appendChild(gpsIcon);
+            const distanceLeft = document.createElement("div");
+            distanceLeft.style.right = '-35px';
+            distanceLeft.style.top = 'calc(100% + 5px)';
+            distanceLeft.classList.add("distanceLeft");
+            moveGPS.appendChild(distanceLeft);
+            gpsLocations[event.data.id] = {
+                moveGPS: moveGPS,
+                gpsIcon: gpsIcon,
+                distanceLeft: distanceLeft,
+                rotate: '',
+                onScreen: false,
+                isVisible: true,
+            }
+        }
+        if (gpsLocations[event.data.id].onScreen !== event.data.onScreen) {
             if (event.data.onScreen == '1') { // top
-                rotate = ' rotate(180deg)';
-                distanceLeft.style.top = 'calc(-100%)'
-                distanceLeft.style.bottom = 'unset'
-                distanceLeft.style.left = '-35px'
-                distanceLeft.style.right = 'unset'
-                distanceLeft.style.transform = 'rotate(180deg)'
+                gpsLocations[event.data.id].rotate = ' rotate(180deg)';
+                gpsLocations[event.data.id].distanceLeft.style.top = 'calc(-100%)'
+                gpsLocations[event.data.id].distanceLeft.style.bottom = 'unset'
+                gpsLocations[event.data.id].distanceLeft.style.left = '-35px'
+                gpsLocations[event.data.id].distanceLeft.style.right = 'unset'
+                gpsLocations[event.data.id].distanceLeft.style.transform = 'rotate(180deg)'
             }
             if (event.data.onScreen == '2') { // right
-                rotate = ' rotate(270deg)';
-                distanceLeft.style.top = 'unset'
-                distanceLeft.style.bottom = 'calc(100% + 25px)'
-                distanceLeft.style.left = '-35px'
-                distanceLeft.style.right = 'unset'
-                distanceLeft.style.transform = 'rotate(90deg)'
+                gpsLocations[event.data.id].rotate = ' rotate(270deg)';
+                gpsLocations[event.data.id].distanceLeft.style.top = 'unset'
+                gpsLocations[event.data.id].distanceLeft.style.bottom = 'calc(100% + 25px)'
+                gpsLocations[event.data.id].distanceLeft.style.left = '-35px'
+                gpsLocations[event.data.id].distanceLeft.style.right = 'unset'
+                gpsLocations[event.data.id].distanceLeft.style.transform = 'rotate(90deg)'
             }
             if (event.data.onScreen == '3') { // bottom
-                rotate = ' rotate(0deg)';
-                distanceLeft.style.top = 'calc(-100%)'
-                distanceLeft.style.bottom = 'unset'
-                distanceLeft.style.left = '-35px'
-                distanceLeft.style.right = 'unset'
-                distanceLeft.style.transform = 'rotate(0deg)'
+                gpsLocations[event.data.id].rotate = ' rotate(0deg)';
+                gpsLocations[event.data.id].distanceLeft.style.top = 'calc(-100%)'
+                gpsLocations[event.data.id].distanceLeft.style.bottom = 'unset'
+                gpsLocations[event.data.id].distanceLeft.style.left = '-35px'
+                gpsLocations[event.data.id].distanceLeft.style.right = 'unset'
+                gpsLocations[event.data.id].distanceLeft.style.transform = 'rotate(0deg)'
             }
             if (event.data.onScreen == '4') { // left
-                rotate = 'rotate(90deg)';
-                distanceLeft.style.top = 'unset'
-                distanceLeft.style.bottom = 'calc(100% + 25px)'
-                distanceLeft.style.left = 'unset'
-                distanceLeft.style.right = '-35px'
-                distanceLeft.style.transform = 'rotate(270deg)'
+                gpsLocations[event.data.id].rotate = 'rotate(90deg)';
+                gpsLocations[event.data.id].distanceLeft.style.top = 'unset'
+                gpsLocations[event.data.id].distanceLeft.style.bottom = 'calc(100% + 25px)'
+                gpsLocations[event.data.id].distanceLeft.style.left = 'unset'
+                gpsLocations[event.data.id].distanceLeft.style.right = '-35px'
+                gpsLocations[event.data.id].distanceLeft.style.transform = 'rotate(270deg)'
             }
         }
         if (event.data.onScreen) {
-            onScreen = event.data.onScreen;
+            gpsLocations[event.data.id].onScreen = event.data.onScreen;
         } else {
-            rotate = 'rotate(0deg)';
-            distanceLeft.style.top = 'calc(100% + 5px)'
-            distanceLeft.style.bottom = 'unset'
-            distanceLeft.style.left = 'unset'
-            distanceLeft.style.right = '-35px'
-            distanceLeft.style.transform = 'rotate(0deg)'
-            onScreen = false;
+            gpsLocations[event.data.id].rotate = 'rotate(0deg)';
+            gpsLocations[event.data.id].distanceLeft.style.top = 'calc(100% + 5px)'
+            gpsLocations[event.data.id].distanceLeft.style.bottom = 'unset'
+            gpsLocations[event.data.id].distanceLeft.style.left = 'unset'
+            gpsLocations[event.data.id].distanceLeft.style.right = '-35px'
+            gpsLocations[event.data.id].distanceLeft.style.transform = 'rotate(0deg)'
+            gpsLocations[event.data.id].onScreen = false;
         }
-        if (onScreen) {
-            if (moveGPS.style.transition == '') moveGPS.style.transition = 'transform .16s linear';
+        if (gpsLocations[event.data.id].onScreen) {
+            if (gpsLocations[event.data.id].moveGPS.style.transition == '') gpsLocations[event.data.id].moveGPS.style.transition = 'transform .16s linear';
         } else {
-            if (moveGPS.style.transition != '') moveGPS.style.transition = '';
+            if (gpsLocations[event.data.id].moveGPS.style.transition != '') gpsLocations[event.data.id].moveGPS.style.transition = '';
         }
-        if (onScreen == '2') {
-            moveGPS.style.transform = `translate3d(calc(${event.data.xxx}vw - ${30}px), ${event.data.yyy}vh, 0)` + rotate;
-        } else if (onScreen == '3') {
-            moveGPS.style.transform = `translate3d(${event.data.xxx}vw, calc(${event.data.yyy}vh - ${30}px), 0)` + rotate;
+        if (gpsLocations[event.data.id].onScreen == '2') {
+            gpsLocations[event.data.id].moveGPS.style.transform = `translate3d(calc(${event.data.xxx}vw - ${30}px), ${event.data.yyy}vh, 0)` + gpsLocations[event.data.id].rotate;
+        } else if (gpsLocations[event.data.id].onScreen == '3') {
+            gpsLocations[event.data.id].moveGPS.style.transform = `translate3d(${event.data.xxx}vw, calc(${event.data.yyy}vh - ${30}px), 0)` + gpsLocations[event.data.id].rotate;
         } else {
-            moveGPS.style.transform = `translate3d(${event.data.xxx}vw, ${event.data.yyy}vh, 0)` + rotate;
+            gpsLocations[event.data.id].moveGPS.style.transform = `translate3d(${event.data.xxx}vw, ${event.data.yyy}vh, 0)` + gpsLocations[event.data.id].rotate;
         }
         if (event.data.left) {
-            distanceLeft.textContent = event.data.left;
+            gpsLocations[event.data.id].distanceLeft.textContent = event.data.left;
         } else {
-            distanceLeft.textContent = '';
+            gpsLocations[event.data.id].distanceLeft.textContent = '';
         }
-        // gpsIcon.style.width = `${iconWidth}px`;
+        // gpsLocations[event.data.id].gpsIcon.style.width = `${iconWidth}px`;
         // console.log("Icon Width:", `${iconWidth}px`)
-        if (!isVisible) {
-            $("#moveGPS").show();
-            isVisible = true;
+        if (!gpsLocations[event.data.id].isVisible) {
+            gpsLocations[event.data.id].moveGPS.show();
+            gpsLocations[event.data.id].isVisible = true;
         }
-    } else if (isVisible) {
-        isVisible = false;
-        $("#moveGPS").hide();
+    } else if (gpsLocations[event.data.id].isVisible) {
+        gpsLocations[event.data.id].isVisible = false;
+        gpsLocations[event.data.id].moveGPS.hide();
     }
 });

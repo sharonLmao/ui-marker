@@ -9,11 +9,11 @@ body {
   height: 100vh;
 }
 
-#moveGPS {
+.moveGPS {
   position: absolute;
 }
 
-#distanceLeft {
+.distanceLeft {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);

@@ -66,6 +66,7 @@ function StartShowingMarkers()
                     lastXXX = xxx
                     lastYYY = yyy
                     SendNUIMessage({
+                        id = name,
                         toggle = true,
                         xxx = xxx * 100,
                         yyy = yyy * 100,
