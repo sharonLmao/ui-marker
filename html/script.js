@@ -20,6 +20,13 @@ addEventListener("message", function (event) {
             distanceLeft.style.right = '-35px';
             distanceLeft.style.top = 'calc(100% + 5px)';
             distanceLeft.classList.add("distanceLeft");
+            /*
+            This ^ is the same as this:
+            <div style="display: none; transform: translate3d(0vw, 0vh, 0);" id="moveGPS">
+                <img style="width: 30px; display: block;" id="gpsIcon" src="location.svg" />
+                <div id="distanceLeft" style="right: -35px; top: calc(100% + 5px);"></div>
+            </div>
+            */
             moveGPS.appendChild(distanceLeft);
             document.body.append(moveGPS);
             gpsLocations[event.data.id] = {
