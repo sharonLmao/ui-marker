@@ -1,10 +1,10 @@
 function PrintDistanceToTarget(distance)
     if ShouldUseMetricMeasurements() then
         local distanceInKm = distance / 1000
-        print(string.format("Distance to finish line: %.5f km.", distanceInKm))
+        return string.format("%.5f km.", distanceInKm)
     else
         local distanceInMiles = distance / 1609.34
-        print(string.format("Distance to finish line: %.0f mi.", distanceInMiles))
+        return string.format("%.0f mi.", distanceInMiles)
     end
 end
 
