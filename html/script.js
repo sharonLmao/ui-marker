@@ -121,7 +121,9 @@ addEventListener("message", function (event) {
             gpsLocations[event.data.id].moveGPS.display = '';
         }
     } else if (event.data.action == 'hideSpecificMarker') {
+        console.log("hideSpecificMarker ?", event.data.id)
         if (gpsLocations[event.data.id].isVisible) {
+            console.log("hideSpecificMarker worked", event.data.id)
             gpsLocations[event.data.id].isVisible = false;
             gpsLocations[event.data.id].moveGPS.display = 'none';
         }
