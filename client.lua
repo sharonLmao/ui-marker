@@ -54,6 +54,13 @@ Citizen.CreateThread(function()
         Citizen.Wait(500)
     end
     StartShowingMarkers()
+    print("^2UI-MARKER v1.0.0 created by Sharon and Burgil^0")
+    print("^3Commands:^0")
+    print("^5/ui-marker:client:add-marker [name] [x] [y] [z]^0 - Adds a marker at the specified coordinates.")
+    print("^5/ui-marker:client:remove-marker [name]^0 - Removes the marker with the specified name.")
+    print("^5/ui-marker:client:show-markers^0 - Shows all markers.")
+    print("^5/ui-marker:client:hide-markers^0 - Hides all markers.")
+    print("^5/ui-marker:client:clean-markers^0 - Deletes all markers.")
 end)
 
 RegisterNetEvent('ui-marker:client:add-marker')
