@@ -12,3 +12,7 @@ body {
 #moveGPS {
   position: absolute;
 }
+
+#distanceLeft {
+  position: absolute;
+}

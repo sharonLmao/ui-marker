@@ -11,15 +11,48 @@ addEventListener("message", function (event) {
         const scaleFactor = 0.17 + (300 - distance) / 300;
         const iconWidth = Math.max(scaleFactor, 0.6);
         if (onScreen !== event.data.onScreen) {
-            if (event.data.onScreen == '1') rotate = ' rotate(180deg)';
-            if (event.data.onScreen == '2') rotate = ' rotate(270deg)';
-            if (event.data.onScreen == '3') rotate = ' rotate(0deg)';
-            if (event.data.onScreen == '4') rotate = ' rotate(90deg)';
+            if (event.data.onScreen == '1') { // top
+                rotate = ' rotate(180deg)';
+                distanceLeft.style.top = 'unset'
+                distanceLeft.style.bottom = 'unset'
+                distanceLeft.style.left = 'unset'
+                distanceLeft.style.right = 'unset'
+                distanceLeft.style.transform = 'rotate(180deg)'
+            }
+            if (event.data.onScreen == '2') { // right
+                rotate = ' rotate(270deg)';
+                distanceLeft.style.top = 'unset'
+                distanceLeft.style.bottom = 'unset'
+                distanceLeft.style.left = '10px'
+                distanceLeft.style.right = 'unset'
+                distanceLeft.style.transform = 'rotate(270deg)'
+            }
+            if (event.data.onScreen == '3') { // bottom
+                rotate = ' rotate(0deg)';
+                distanceLeft.style.top = '10px'
+                distanceLeft.style.bottom = 'unset'
+                distanceLeft.style.left = 'unset'
+                distanceLeft.style.right = 'unset'
+                distanceLeft.style.transform = 'rotate(0deg)'
+            }
+            if (event.data.onScreen == '4') { // left
+                rotate = ' rotate(90deg)';
+                distanceLeft.style.top = 'unset'
+                distanceLeft.style.bottom = 'unset'
+                distanceLeft.style.left = 'unset'
+                distanceLeft.style.right = '10px'
+                distanceLeft.style.transform = 'rotate(90deg)'
+            }
         }
         if (event.data.onScreen) {
             onScreen = event.data.onScreen;
         } else {
             rotate = 'rotate(0deg)';
+            distanceLeft.style.top = 'unset'
+            distanceLeft.style.bottom = '10px'
+            distanceLeft.style.left = 'unset'
+            distanceLeft.style.right = 'unset'
+            distanceLeft.style.transform = 'rotate(0deg)'
             onScreen = false;
         }
         if (onScreen) {
