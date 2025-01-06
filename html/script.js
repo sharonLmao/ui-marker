@@ -36,20 +36,20 @@ addEventListener("message", function (event) {
                 distanceLeft.style.transform = 'rotate(0deg)'
             }
             if (event.data.onScreen == '4') { // left
-                rotate = ' rotate(90deg)';
+                rotate = 'rotate(90deg)';
                 distanceLeft.style.top = 'unset'
-                distanceLeft.style.bottom = 'unset'
+                distanceLeft.style.bottom = 'calc(100% + 50px)'
                 distanceLeft.style.left = 'unset'
-                distanceLeft.style.right = '10px'
-                distanceLeft.style.transform = 'rotate(90deg)'
+                distanceLeft.style.right = '-35px'
+                distanceLeft.style.transform = 'rotate(270deg)'
             }
         }
         if (event.data.onScreen) {
             onScreen = event.data.onScreen;
         } else {
             rotate = 'rotate(0deg)';
-            distanceLeft.style.top = 'unset'
-            distanceLeft.style.bottom = '10px'
+            distanceLeft.style.top = 'calc(100% + 5px)'
+            distanceLeft.style.bottom = 'unset'
             distanceLeft.style.left = 'unset'
             distanceLeft.style.right = 'unset'
             distanceLeft.style.transform = 'rotate(0deg)'
@@ -73,7 +73,7 @@ addEventListener("message", function (event) {
             distanceLeft.textContent = '';
         }
         // gpsIcon.style.width = `${iconWidth}px`;
-        console.log("Icon Width:", `${iconWidth}px`)
+        // console.log("Icon Width:", `${iconWidth}px`)
         if (!isVisible) {
             $("#moveGPS").show();
             isVisible = true;

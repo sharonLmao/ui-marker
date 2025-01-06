@@ -15,4 +15,6 @@ body {
 
 #distanceLeft {
   position: absolute;
+  margin-left: -15px;
+  width: 100px;
 }
