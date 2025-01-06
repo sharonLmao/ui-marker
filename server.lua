@@ -23,10 +23,22 @@ RegisterCommand("show-markers", function(source, args, rawCommand)
     TriggerClientEvent('ui-marker:client:show-markers', source)
 end, false)
 
+function ShowMarkers()
+    TriggerClientEvent('ui-marker:client:show-markers', source)
+end
+
+exports("ShowMarkers", ShowMarkers);
+
 -- Hide All Markers:
 RegisterCommand("hide-markers", function(source, args, rawCommand)
     TriggerClientEvent('ui-marker:client:hide-markers', source)
 end, false)
+
+function HideMarkers()
+    TriggerClientEvent('ui-marker:client:hide-markers', source)
+end
+
+exports("HideMarkers", HideMarkers);
 
 -- Show Specific Markers:
 RegisterCommand("show-marker", function(source, args, rawCommand)
@@ -38,6 +50,13 @@ RegisterCommand("show-marker", function(source, args, rawCommand)
     TriggerClientEvent('ui-marker:client:show-marker', source, name)
 end, false)
 
+function ShowMarker(source, name)
+    print( "Showing marker with name: " .. name)
+    TriggerClientEvent('ui-marker:client:show-marker', source, name)
+end
+
+exports("ShowMarker", ShowMarker);
+
 -- Hide Specific Markers:
 RegisterCommand("hide-marker", function(source, args, rawCommand)
     if #args < 1 then
@@ -47,6 +66,13 @@ RegisterCommand("hide-marker", function(source, args, rawCommand)
     local name = args[1]
     TriggerClientEvent('ui-marker:client:hide-marker', source, name)
 end, false)
+
+function HideMarker(source, name)
+    if Config.debug then print( "Hiding marker with name: " .. name .. " For player id: " .. source) end
+    TriggerClientEvent('ui-marker:client:hide-marker', source, name)
+end
+
+exports("HideMarker", HideMarker);
 
 -- Delete All Markers:
 RegisterCommand("clean-markers", function(source, args, rawCommand)

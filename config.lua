@@ -1,5 +1,7 @@
 Config = {}
 
+Config.debug = true
+
 Config.targetCoords = {
     ["home"] = vector3(2829.993896, 1474.732544, 24.555395),
     ["test1"] = vector3(2567.234375, 1234.567890, 28.123456),
