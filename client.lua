@@ -11,9 +11,6 @@ function StartShowingMarkers()
             playerCoords = GetEntityCoords(PlayerPedId())
             for name, targetCoords in pairs(Config.targetCoords) do
                 distance = #(playerCoords - targetCoords)
-                if distance < 25.0 then
-                    DrawText3D(targetCoords, "[E] " .. name)
-                end
                 local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(targetCoords.x, targetCoords.y, targetCoords.z)
                 if onScreen == 1 then -- up
                     yyy = 0
