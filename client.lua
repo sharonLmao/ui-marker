@@ -1,32 +1,9 @@
 --- Test Glow System:
 
-local objectHash = GetHashKey("lr_prop_supermod_door_01")
-local outlinedObjects = {}
-
-function GetNearestObjectOfHash(hash, playerPed, radius)
-    local pedCoords = GetEntityCoords(playerPed)
-    local object = GetClosestObjectOfType(pedCoords.x, pedCoords.y, pedCoords.z, radius, hash, false, false, false)
-    return object
-end
-
 function GetNearestObjectOfHashOnCoords(hash, coords, radius)
     local object = GetClosestObjectOfType(coords.x, coords.y, coords.z, radius, hash, false, false, false)
     return object
 end
-
-RegisterCommand("glow", function(source, args)
-    local playerPed = PlayerPedId()
-end, false)
-
-RegisterCommand("unglow", function(source, args)
-    for _, object in ipairs(outlinedObjects) do
-        if DoesEntityExist(object) then
-            SetEntityDrawOutline(object, false)
-        end
-    end
-    outlinedObjects = {}
-    print("Outline removed from all objects.")
-end, false)
 
 ---
 
@@ -61,13 +38,7 @@ function StartShowingMarkers()
                         local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
                         if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
                             SetEntityDrawOutline(nearestObject, false)
-                            for i, obj in ipairs(outlinedObjects) do
-                                if obj == nearestObject then
-                                    table.remove(outlinedObjects, i)
-                                    break
-                                end
-                            end
-                            print("Outline applied to the nearest object.")
+                            print("Outline hidden from the nearest object.")
                         else
                             print("No object found within the radius.")
                         end
@@ -77,14 +48,13 @@ function StartShowingMarkers()
                         target.hide = true
                     end
                     distance = #(playerCoords - target.coords)
-                    if target.glow_obj and not target.outline then
+                    if target.glow_obj then
                         if distance <= Config.GLOW_DISTANCE then
                             local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
                             if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
                                 target.outline = true
                                 SetEntityDrawOutline(nearestObject, true)
                                 SetEntityDrawOutlineColor(64, 224, 208, 255)
-                                table.insert(outlinedObjects, nearestObject)
                                 print("Outline applied to the nearest object.")
                             else
                                 print("No object found within the radius.")
