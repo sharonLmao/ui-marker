@@ -66,6 +66,7 @@ function StartShowingMarkers()
                                 print("Already Glowing!")
                             end
                         else
+                            target.outline = false
                             print("Unglow! Too far!")
                         end
                     end
