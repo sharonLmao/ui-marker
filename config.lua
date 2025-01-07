@@ -4,7 +4,7 @@ Config.debug = false
 
 Config.UPDATE_SPEED = 0.6
 Config.DELAY_SPEED = 1500
-Config.GLOW_DISTANCE = 2000.0
+Config.GLOW_DISTANCE = 500.0
 
 Config.targetCoords = {
     ["home"] = {
