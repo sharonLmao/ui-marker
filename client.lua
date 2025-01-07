@@ -21,7 +21,7 @@ function StartShowingMarkers()
                     if target.showbydefualt then
                         target.hide = false
                     end
-                    coordsCount = coordsCount - 1
+                    coordsCount = coordsCount + 1
                 else
                     if not target.showbydefualt then
                         target.hide = true
@@ -58,7 +58,8 @@ function StartShowingMarkers()
                     end
                 end
             end
-            if coordsCount == #Config.targetCoords then -- All coordinades are hidden
+            print(coordsCount, #pairs(Config.targetCoords)
+            if coordsCount == #pairs(Config.targetCoords) then -- All coordinades are hidden
                 sleep = 1000
             else
                 sleep = 0.6
