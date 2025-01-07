@@ -29,8 +29,7 @@ function StartShowingMarkers()
                         target.hide = true
                     end
                     distance = #(playerCoords - target.coords)
-                    local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(target.coords.x, target.coords.y,
-                        target.coords.z)
+                    local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(target.coords.x, target.coords.y, target.coords.z)
                     if onScreen == 1 then -- up
                         yyy = 0
                     end
@@ -61,13 +60,20 @@ function StartShowingMarkers()
                     end
                 end
             end
-            if Config.debug then print("Hide Now?", "Hidden Count:", hiddenCount, "Total Count:", totalCount) end
+            print("Hide Now?", "Hidden Count:", hiddenCount, "Total Count:", totalCount)
             if hiddenCount == totalCount then -- All coordinades are hidden
                 sleep = 1000
             else
                 sleep = 0.6
             end
-            Citizen.Wait(sleep)
+            if sleep == 1000 then
+                for i=1,100 do
+                    if sleep ~= 1000 then
+                        break
+                    end
+                    Citizen.Wait(10)
+                end
+            end
         end
     end)
 end
@@ -96,6 +102,7 @@ end)
 
 RegisterNetEvent('ui-marker:client:add-marker')
 AddEventHandler('ui-marker:client:add-marker', function(markerName, markerPosition)
+    sleep = 0.6
     Config.targetCoords[markerName] = markerPosition
     -- When markers update they arleady get created if they dont exist by the UI
     print("Marker added with id:", markerName)
@@ -115,8 +122,8 @@ end)
 RegisterNetEvent('ui-marker:client:show-marker')
 AddEventHandler('ui-marker:client:show-marker', function(markerName)
     if Config.targetCoords[markerName] then
+        sleep = 0.6
         Config.targetCoords[markerName].show = true
-        Wait(2300)
         SendNUIMessage({ action = "showSpecificMarker", id = markerName })
         print(markerName, "Marker shown!")
     else
@@ -156,7 +163,6 @@ RegisterNetEvent("ui-marker:client:hide-markers")
 AddEventHandler("ui-marker:client:hide-markers", function()
     Citizen.CreateThread(function()
         if isDisplaying then
-            sleep = 0.6
             isDisplaying = false
             print("Hide all markers")
             for name, target in pairs(Config.targetCoords) do
