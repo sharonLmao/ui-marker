@@ -114,8 +114,8 @@ function StartShowingMarkers()
                     end
                     hiddenCount = hiddenCount + 1
                 else
-                    distance = #(playerCoords - target.coords)
                     if target.glow_obj then
+                        distance = #(playerCoords - target.coords)
                         if distance <= Config.GLOW_DISTANCE then
                             local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords,
                                 Config.GLOW_DISTANCE)
