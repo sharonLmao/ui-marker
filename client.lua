@@ -11,19 +11,24 @@ local isDisplaying = true
 local sleep = Config.UPDATE_SPEED
 
 function StartShowingMarkers()
-    local lastXXX = 0
-    local lastYYY = 0
+    local delayPlayerPos = 0
     local playerCoords = vector3(0, 0, 0)
-    local distance = 0
-    sleep = Config.UPDATE_SPEED
     Citizen.CreateThread(function()
-        local delayPlayerPos = 0
         while isDisplaying do
-            delayPlayerPos = delayPlayerPos + Config.UPDATE_SPEED
-            if delayPlayerPos >= 90 then
+            delayPlayerPos = delayPlayerPos + 1
+            if delayPlayerPos > 10 then
                 delayPlayerPos = 0
                 playerCoords = GetEntityCoords(PlayerPedId())
             end
+            Wait(10)
+        end
+    end)
+    Citizen.CreateThread(function()
+        local lastXXX = 0
+        local lastYYY = 0
+        local distance = 0
+        sleep = Config.UPDATE_SPEED
+        while isDisplaying do
             local hiddenCount = 0
             local totalCount = 0
             for name, target in pairs(Config.targetCoords) do
@@ -33,40 +38,11 @@ function StartShowingMarkers()
                         target.hide = false
                     end
                     hiddenCount = hiddenCount + 1
-                    if target.glow_obj then
-                        if target.outline then
-                            target.outline = false
-                            local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
-                            if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
-                                SetEntityDrawOutline(nearestObject, false)
-                            end
-                        end
-                    end
                 else
                     if not target.show then
                         target.hide = true
                     end
                     distance = #(playerCoords - target.coords)
-                    if target.glow_obj then
-                        if distance <= Config.GLOW_DISTANCE then
-                            if not target.outline then
-                                local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
-                                if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
-                                    target.outline = true
-                                    SetEntityDrawOutline(nearestObject, true)
-                                    SetEntityDrawOutlineColor(64, 224, 208, 255)
-                                end
-                            end
-                        else
-                            if target.outline then
-                                target.outline = false
-                                local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
-                                if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
-                                    SetEntityDrawOutline(nearestObject, false)
-                                end
-                            end
-                        end
-                    end
                     local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(target.coords.x, target.coords.y,
                         target.coords.z)
                     if onScreen == 1 then -- up
@@ -116,6 +92,48 @@ function StartShowingMarkers()
             else
                 Citizen.Wait(sleep)
             end
+        end
+    end)
+    Citizen.CreateThread(function()
+        local distance = 0
+        while isDisplaying do
+            for name, target in pairs(Config.targetCoords) do
+                if target.hide then
+                    if target.glow_obj then
+                        if target.outline then
+                            target.outline = false
+                            local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords,
+                                Config.GLOW_DISTANCE)
+                            if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
+                                SetEntityDrawOutline(nearestObject, false)
+                            end
+                        end
+                    end
+                else
+                    distance = #(playerCoords - target.coords)
+                    if target.glow_obj then
+                        if distance <= Config.GLOW_DISTANCE then
+                            local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords,
+                                Config.GLOW_DISTANCE)
+                            if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
+                                target.outline = true
+                                SetEntityDrawOutline(nearestObject, true)
+                                SetEntityDrawOutlineColor(64, 224, 208, 255)
+                            end
+                        else
+                            if target.outline then
+                                target.outline = false
+                                local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords,
+                                    Config.GLOW_DISTANCE)
+                                if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
+                                    SetEntityDrawOutline(nearestObject, false)
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+            Citizen.Wait(10)
         end
     end)
 end
