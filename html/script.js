@@ -62,7 +62,7 @@ addEventListener("message", function (event) {
                 gpsLocations[event.data.id].distanceLeft.style.right = 'unset'
                 gpsLocations[event.data.id].distanceLeft.style.transform = 'rotate(0deg)'
             }
-            if (event.data.onScreen == '4'|| gpsLocations[event.data.id]) { // left
+            if (event.data.onScreen == '4' || gpsLocations[event.data.id]) { // left
                 gpsLocations[event.data.id].rotate = 'rotate(90deg)';
                 gpsLocations[event.data.id].distanceLeft.style.top = 'unset'
                 gpsLocations[event.data.id].distanceLeft.style.bottom = 'calc(100% + 25px)'
@@ -117,10 +117,9 @@ addEventListener("message", function (event) {
         for (const location in gpsLocations) {
             if (location) {
                 gpsLocations[location].moveGPS.style.display = 'none';
-                gpsLocations[location] = {};
             }
         }
-        
+        gpsLocations[location] = {};
     } else if (event.data.action == 'removeSpecificMarker') {
         gpsLocations[event.data.id].moveGPS.remove();
         gpsLocations[event.data.id] = undefined;
