@@ -3,8 +3,8 @@ let isMoving = false;
 
 addEventListener("message", function (event) {
     if (event.data.action == 'moveMarkers') {
-        isMoving = true;
         if (isMoving) return;
+        isMoving = true;
         const distance = parseFloat(event.data.distance);
         const scaleFactor = 0.17 + (300 - distance) / 300;
         const iconWidth = Math.max(scaleFactor, 0.6);
