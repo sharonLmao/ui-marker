@@ -40,25 +40,33 @@ function StartShowingMarkers()
                             SetEntityDrawOutline(nearestObject, false)
                             print("Outline hidden from the nearest object.")
                         else
-                            print("No object found within the radius.")
+                            print("No object found within the radius to hide.")
                         end
+                    else
+                        print("Already Hidden!")
                     end
                 else
                     if not target.show then
                         target.hide = true
                     end
                     distance = #(playerCoords - target.coords)
-                    if target.glow_obj then
+                    if target.glow_obj then --  and 
                         if distance <= Config.GLOW_DISTANCE then
-                            local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
-                            if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
-                                target.outline = true
-                                SetEntityDrawOutline(nearestObject, true)
-                                SetEntityDrawOutlineColor(64, 224, 208, 255)
-                                print("Outline applied to the nearest object.")
+                            if not target.outline then
+                                local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
+                                if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
+                                    target.outline = true
+                                    SetEntityDrawOutline(nearestObject, true)
+                                    SetEntityDrawOutlineColor(64, 224, 208, 255)
+                                    print("Outline applied to the nearest object.")
+                                else
+                                    print("No object found within the radius to glow.")
+                                end
                             else
-                                print("No object found within the radius.")
+                                print("Already Glowing!")
                             end
+                        else
+                            print("Unglow! Too far!")
                         end
                     end
                     local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(target.coords.x, target.coords.y,
