@@ -18,7 +18,6 @@ function StartShowingMarkers()
             local coordsCount = 0
             for name, target in pairs(Config.targetCoords) do
                 if target.hide then
-                    coordsCount = coordsCount + 1
                     if target.showbydefualt then
                         target.hide = false
                     end
