@@ -49,11 +49,13 @@ function StartShowingMarkers()
                     distance = #(playerCoords - target.coords)
                     if target.glow_obj then
                         if distance <= Config.GLOW_DISTANCE then
-                            local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
-                            if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
-                                target.outline = true
-                                SetEntityDrawOutline(nearestObject, true)
-                                SetEntityDrawOutlineColor(64, 224, 208, 255)
+                            if not target.outline then
+                                local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
+                                if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
+                                    target.outline = true
+                                    SetEntityDrawOutline(nearestObject, true)
+                                    SetEntityDrawOutlineColor(64, 224, 208, 255)
+                                end
                             end
                         else
                             if target.outline then
