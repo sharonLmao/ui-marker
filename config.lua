@@ -2,6 +2,9 @@ Config = {}
 
 Config.debug = false
 
+Config.UPDATE_SPEED = 0.6
+Config.DELAY_SPEED = 1500
+
 Config.targetCoords = {
     ["home"] = {
         coords = vector3(2829.993896, 1474.732544, 24.555395),
