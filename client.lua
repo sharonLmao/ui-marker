@@ -145,6 +145,7 @@ AddEventHandler("ui-marker:client:show-markers", function()
             isDisplaying = true
             StartShowingMarkers()
         end
+        Wait(2300)
         SendNUIMessage({ action = "showAllMarkers" })
     end)
 end)
