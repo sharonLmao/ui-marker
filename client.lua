@@ -20,12 +20,12 @@ function StartShowingMarkers()
             for name, target in pairs(Config.targetCoords) do
                 totalCount = totalCount + 1
                 if target.hide then
-                    if target.showbydefualt then
+                    if target.show then
                         target.hide = false
                     end
                     hiddenCount = hiddenCount + 1
                 else
-                    if not target.showbydefualt then
+                    if not target.show then
                         target.hide = true
                     end
                     distance = #(playerCoords - target.coords)
@@ -50,7 +50,7 @@ function StartShowingMarkers()
                             id = name,
                             label = target.label,
                             labeldistance = target.distance,
-                            showbydefualt = target.showbydefualt,
+                            show = target.show,
                             xxx = xxx * 100,
                             yyy = yyy * 100,
                             distance = distance,
@@ -113,7 +113,7 @@ end)
 RegisterNetEvent('ui-marker:client:show-marker')
 AddEventHandler('ui-marker:client:show-marker', function(markerName)
     if Config.targetCoords[markerName] then
-        Config.targetCoords[markerName].showbydefualt = true
+        Config.targetCoords[markerName].show = true
         SendNUIMessage({ action = "showSpecificMarker", id = markerName })
         print(markerName, "Marker shown!")
     else
@@ -124,7 +124,7 @@ end)
 RegisterNetEvent('ui-marker:client:hide-marker')
 AddEventHandler('ui-marker:client:hide-marker', function(markerName)
     if Config.targetCoords[markerName] then
-        Config.targetCoords[markerName].showbydefualt = false
+        Config.targetCoords[markerName].show = false
         SendNUIMessage({ action = "hideSpecificMarker", id = markerName })
         print(markerName, "Marker hidden!")
     else
@@ -137,9 +137,10 @@ AddEventHandler("ui-marker:client:show-markers", function()
     if not isDisplaying then
         isDisplaying = true
         StartShowingMarkers()
-        SendNUIMessage({ action = "showAllMarkers" })
-    else
-        SendNUIMessage({ action = "showAllMarkers" })
+    end
+    SendNUIMessage({ action = "showAllMarkers" })
+    for name, target in pairs(Config.targetCoords) do
+        target.show = true
     end
     print("Show all markers")
 end)
@@ -150,6 +151,9 @@ AddEventHandler("ui-marker:client:hide-markers", function()
         isDisplaying = false
         SendNUIMessage({ action = "hideAllMarkers" })
         print("Hide all markers")
+        for name, target in pairs(Config.targetCoords) do
+            target.show = false
+        end
     end
 end)
 

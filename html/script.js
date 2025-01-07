@@ -7,7 +7,7 @@ addEventListener("message", function (event) {
         const iconWidth = Math.max(scaleFactor, 0.6);
         if (!gpsLocations[event.data.id]) {
             const moveGPS = document.createElement("div");
-            moveGPS.style.display = event.data.showbydefualt ? '' : 'none';
+            moveGPS.style.display = event.data.show ? '' : 'none';
             moveGPS.style.transform = 'translate3d(0vw, 0vh, 0)';
             moveGPS.classList.add("moveGPS");
             const gpsIcon = document.createElement("img");
