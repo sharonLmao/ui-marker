@@ -5,20 +5,23 @@ function StartShowingMarkers()
     local lastYYY = 0
     local playerCoords = vector3(0, 0, 0)
     local distance = 0
+    local sleep = 0.6
     Citizen.CreateThread(function()
         local delayPlayerPos = 0
         while isDisplaying do
-            Citizen.Wait(0.6)
+            Citizen.Wait(sleep)
             delayPlayerPos = delayPlayerPos + 0.6
             if delayPlayerPos >= 60 then
                 delayPlayerPos = 0
                 playerCoords = GetEntityCoords(PlayerPedId())
             end
+            local coordsCount = #Config.targetCoords
             for name, target in pairs(Config.targetCoords) do
                 if target.hide then
                     if target.showbydefualt then
                         target.hide = false
                     end
+                    coordsCount = coordsCount - 1
                 else
                     if not target.showbydefualt then
                         target.hide = true
@@ -54,6 +57,11 @@ function StartShowingMarkers()
                         })
                     end
                 end
+            end
+            if coordsCount == 0 then -- All coordinades are hidden
+                sleep = 1000
+            else
+                sleep = 0.6
             end
         end
     end)
