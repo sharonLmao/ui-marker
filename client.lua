@@ -97,7 +97,10 @@ function StartShowingMarkers()
     Citizen.CreateThread(function()
         local distance = 0
         while isDisplaying do
+            local hiddenCount = 0
+            local totalCount = 0
             for name, target in pairs(Config.targetCoords) do
+                totalCount = totalCount + 1
                 if target.hide then
                     if target.glow_obj then
                         if target.outline then
@@ -109,6 +112,7 @@ function StartShowingMarkers()
                             end
                         end
                     end
+                    hiddenCount = hiddenCount + 1
                 else
                     distance = #(playerCoords - target.coords)
                     if target.glow_obj then
@@ -133,7 +137,22 @@ function StartShowingMarkers()
                     end
                 end
             end
-            Citizen.Wait(10)
+            -- Delayed speed of 1000 must equal 20 x 50 or be changed accordingly
+            if hiddenCount == totalCount then -- All coordinades are hidden
+                sleep = 1000
+            else
+                sleep = Config.UPDATE_SPEED
+            end
+            if sleep == 1000 then
+                for i = 1, 20 do
+                    if sleep ~= 1000 then
+                        break
+                    end
+                    Citizen.Wait(50)
+                end
+            else
+                Citizen.Wait(sleep)
+            end
         end
     end)
 end
