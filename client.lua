@@ -48,7 +48,7 @@ function StartShowingMarkers()
                             if target.outline then
                                 target.outline = false
                                 local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords,
-                                    Config.GLOW_DISTANCE)
+                                    target.glowDistance)
                                 if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
                                     SetEntityDrawOutline(nearestObject, false)
                                 end
@@ -121,7 +121,7 @@ function StartShowingMarkers()
                         if target.outline then
                             target.outline = false
                             local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords,
-                                Config.GLOW_DISTANCE)
+                                target.glowDistance)
                             if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
                                 SetEntityDrawOutline(nearestObject, false)
                             end
@@ -131,9 +131,9 @@ function StartShowingMarkers()
                 else
                     if target.glow_obj then
                         distance = #(playerCoords - target.coords)
-                        if distance <= Config.GLOW_DISTANCE then
+                        if distance <= target.glowDistance then
                             local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords,
-                                Config.GLOW_DISTANCE)
+                                target.glowDistance)
                             if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
                                 target.outline = true
                                 SetEntityDrawOutline(nearestObject, true)
@@ -143,7 +143,7 @@ function StartShowingMarkers()
                             if target.outline then
                                 target.outline = false
                                 local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords,
-                                    Config.GLOW_DISTANCE)
+                                    target.glowDistance)
                                 if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
                                     SetEntityDrawOutline(nearestObject, false)
                                 end
