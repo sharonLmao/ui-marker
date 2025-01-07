@@ -1,16 +1,17 @@
 local isDisplaying = true
-local sleep = 0.6
+local UPDATE_SPEED = 0.6
+local sleep = UPDATE_SPEED
 
 function StartShowingMarkers()
     local lastXXX = 0
     local lastYYY = 0
     local playerCoords = vector3(0, 0, 0)
     local distance = 0
-    sleep = 0.6
+    sleep = UPDATE_SPEED
     Citizen.CreateThread(function()
         local delayPlayerPos = 0
         while isDisplaying do
-            delayPlayerPos = delayPlayerPos + 0.6
+            delayPlayerPos = delayPlayerPos + UPDATE_SPEED
             if delayPlayerPos >= 90 then
                 delayPlayerPos = 0
                 playerCoords = GetEntityCoords(PlayerPedId())
@@ -61,10 +62,11 @@ function StartShowingMarkers()
                 end
             end
             if Config.debug then print("Hide Now?", "Hidden Count:", hiddenCount, "Total Count:", totalCount) end
+            -- Delayed speed of 1000 must equal 20 x 50 or be changed accordingly
             if hiddenCount == totalCount then -- All coordinades are hidden
                 sleep = 1000
             else
-                sleep = 0.6
+                sleep = UPDATE_SPEED
             end
             if sleep == 1000 then
                 for i=1,20 do
@@ -104,7 +106,7 @@ end)
 
 RegisterNetEvent('ui-marker:client:add-marker')
 AddEventHandler('ui-marker:client:add-marker', function(markerName, markerPosition)
-    sleep = 0.6
+    sleep = UPDATE_SPEED
     Config.targetCoords[markerName] = markerPosition
     -- When markers update they arleady get created if they dont exist by the UI
     print("Marker added with id:", markerName)
@@ -124,7 +126,7 @@ end)
 RegisterNetEvent('ui-marker:client:show-marker')
 AddEventHandler('ui-marker:client:show-marker', function(markerName)
     if Config.targetCoords[markerName] then
-        sleep = 0.6
+        sleep = UPDATE_SPEED
         Config.targetCoords[markerName].show = true
         SendNUIMessage({ action = "showSpecificMarker", id = markerName })
         print(markerName, "Marker shown!")
@@ -148,7 +150,7 @@ RegisterNetEvent("ui-marker:client:show-markers")
 AddEventHandler("ui-marker:client:show-markers", function()
     Citizen.CreateThread(function()
         print("Show all markers")
-        sleep = 0.6
+        sleep = UPDATE_SPEED
         for name, target in pairs(Config.targetCoords) do
             target.show = true
         end
