@@ -1,4 +1,4 @@
-const gpsLocations = {};
+let gpsLocations = {};
 
 addEventListener("message", function (event) {
     if (event.data.action == 'moveMarkers') {
@@ -114,7 +114,13 @@ addEventListener("message", function (event) {
             }
         }
     } else if (event.data.action == 'cleanAllMarkers') {
-        gpsLocations = {};
+        for (const location in gpsLocations) {
+            if (location) {
+                gpsLocations[location].moveGPS.style.display = 'none';
+                gpsLocations[location] = {};
+            }
+        }
+        
     } else if (event.data.action == 'removeSpecificMarker') {
         gpsLocations[event.data.id].moveGPS.remove();
         gpsLocations[event.data.id] = undefined;
