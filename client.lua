@@ -45,6 +45,14 @@ function StartShowingMarkers()
                     distance = #(playerCoords - target.coords)
                     if target.autoCompleteOnArrival and distance <= target.autoCompleteOnArrival then
                         if Config.targetCoords[name] then
+                            if target.outline then
+                                target.outline = false
+                                local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords,
+                                    Config.GLOW_DISTANCE)
+                                if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
+                                    SetEntityDrawOutline(nearestObject, false)
+                                end
+                            end
                             Config.targetCoords[name] = nil
                             SendNUIMessage({ action = "removeSpecificMarker", id = name })
                         end
