@@ -138,8 +138,10 @@ AddEventHandler("ui-marker:client:show-markers", function()
         isDisplaying = true
         StartShowingMarkers()
         SendNUIMessage({ action = "showAllMarkers" })
-        print("Show all markers")
+    else
+        SendNUIMessage({ action = "showAllMarkers" })
     end
+    print("Show all markers")
 end)
 
 RegisterNetEvent("ui-marker:client:hide-markers")
