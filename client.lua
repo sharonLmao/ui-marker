@@ -11,7 +11,7 @@ function StartShowingMarkers()
         local delayPlayerPos = 0
         while isDisplaying do
             delayPlayerPos = delayPlayerPos + 0.6
-            if delayPlayerPos >= 60 then
+            if delayPlayerPos >= 90 then
                 delayPlayerPos = 0
                 playerCoords = GetEntityCoords(PlayerPedId())
             end
@@ -67,11 +67,11 @@ function StartShowingMarkers()
                 sleep = 0.6
             end
             if sleep == 1000 then
-                for i=1,100 do
+                for i=1,20 do
                     if sleep ~= 1000 then
                         break
                     end
-                    Citizen.Wait(10)
+                    Citizen.Wait(50)
                 end
             else
                 Citizen.Wait(sleep)
