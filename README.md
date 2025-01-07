@@ -1,7 +1,3 @@
-Sure! Here's a revised version of your description for a GitHub README:
-
----
-
 # ui-marker: Interest point Indicator
 
 This script serves as an optimized replacement for the traditional 3D marker. It dynamically follows the screen edges, positioning itself at the nearest edge to guide the player toward the waypoint. The design ensures players always know where to go without the clutter of 3D markers. 
@@ -28,4 +24,7 @@ Config.targetCoords = {
 
 **Created by**: Sharon and Burgil
 
-[Preview](https://streamable.com/6jl81z)
+# Preview
+
+https://github.com/user-attachments/assets/719ab0e5-6006-4b44-a850-e950778c0e16
+
