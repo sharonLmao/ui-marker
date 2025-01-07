@@ -4,30 +4,35 @@ Config.debug = false
 
 Config.UPDATE_SPEED = 0.6
 Config.DELAY_SPEED = 1500
+Config.GLOW_DISTANCE = 300.0
 
 Config.targetCoords = {
     ["home"] = {
         coords = vector3(2829.993896, 1474.732544, 24.555395),
         label = "Home",
         distance = 10.0,
-        show = false
+        show = false,
+        glow_obj = nil
     },
     ["carrierdoor"] = {
         coords = vector3(598.093079, -3416.244873, 6.077423),
         label = "Carrier door",
         distance = 5.0,
-        show = false
+        show = false,
+        glow_obj = `lr_prop_supermod_door_01`
     },
     ["test2"] = {
         coords = vector3(2123.456789, 1789.012345, 32.345678),
         label = "test2",
         distance = 10.0,
-        show = false
+        show = false,
+        glow_obj = nil
     },
     ["test3"] = {
         coords = vector3(2901.234567, 1345.678901, 26.789012),
         label = "test3",
         distance = 10.0,
-        show = false
+        show = false,
+        glow_obj = nil
     },
 }

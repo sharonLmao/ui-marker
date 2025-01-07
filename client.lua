@@ -9,17 +9,13 @@ function GetNearestObjectOfHash(hash, playerPed, radius)
     return object
 end
 
+function GetNearestObjectOfHashOnCoords(hash, coords, radius)
+    local object = GetClosestObjectOfType(coords.x, coords.y, coords.z, radius, hash, false, false, false)
+    return object
+end
+
 RegisterCommand("glow", function(source, args)
     local playerPed = PlayerPedId()
-    local nearestObject = GetNearestObjectOfHash(objectHash, playerPed, 50.0)
-    if nearestObject ~= 0 then
-        SetEntityDrawOutline(nearestObject, true)
-        SetEntityDrawOutlineColor(64, 224, 208, 255)
-        table.insert(outlinedObjects, nearestObject)
-        print("Outline applied to the nearest object.")
-    else
-        print("No object found within the radius.")
-    end
 end, false)
 
 RegisterCommand("unglow", function(source, args)
@@ -28,12 +24,9 @@ RegisterCommand("unglow", function(source, args)
             SetEntityDrawOutline(object, false)
         end
     end
-
-    -- Clear the list of outlined objects
     outlinedObjects = {}
     print("Outline removed from all objects.")
 end, false)
-
 
 ---
 
@@ -63,12 +56,43 @@ function StartShowingMarkers()
                         target.hide = false
                     end
                     hiddenCount = hiddenCount + 1
+                    if target.glow_obj and target.outline then
+                        target.outline = false
+                        local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
+                        if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
+                            SetEntityDrawOutline(nearestObject, false)
+                            for i, obj in ipairs(outlinedObjects) do
+                                if obj == nearestObject then
+                                    table.remove(outlinedObjects, i)
+                                    break
+                                end
+                            end
+                            print("Outline applied to the nearest object.")
+                        else
+                            print("No object found within the radius.")
+                        end
+                    end
                 else
                     if not target.show then
                         target.hide = true
                     end
                     distance = #(playerCoords - target.coords)
-                    local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(target.coords.x, target.coords.y, target.coords.z)
+                    if target.glow_obj and not target.outline then
+                        if distance <= Config.GLOW_DISTANCE then
+                            local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
+                            if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
+                                target.outline = true
+                                SetEntityDrawOutline(nearestObject, true)
+                                SetEntityDrawOutlineColor(64, 224, 208, 255)
+                                table.insert(outlinedObjects, nearestObject)
+                                print("Outline applied to the nearest object.")
+                            else
+                                print("No object found within the radius.")
+                            end
+                        end
+                    end
+                    local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(target.coords.x, target.coords.y,
+                        target.coords.z)
                     if onScreen == 1 then -- up
                         yyy = 0
                     end
@@ -107,7 +131,7 @@ function StartShowingMarkers()
                 sleep = Config.UPDATE_SPEED
             end
             if sleep == 1000 then
-                for i=1,20 do
+                for i = 1, 20 do
                     if sleep ~= 1000 then
                         break
                     end
