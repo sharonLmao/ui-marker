@@ -54,21 +54,28 @@ function StartShowingMarkers()
                     distance = #(playerCoords - target.coords)
                     if target.glow_obj then
                         if distance <= Config.GLOW_DISTANCE then
-                            if not target.outline then
-                                local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
-                                if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
-                                    target.outline = true
-                                    SetEntityDrawOutline(nearestObject, true)
-                                    SetEntityDrawOutlineColor(64, 224, 208, 255)
-                                    print("Outline applied to the nearest object.")
-                                else
-                                    print("No object found within the radius to glow.")
-                                end
+                            local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
+                            if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
+                                target.outline = true
+                                SetEntityDrawOutline(nearestObject, true)
+                                SetEntityDrawOutlineColor(64, 224, 208, 255)
+                                print("Outline applied to the nearest object.")
                             else
-                                print("Already Glowing!")
+                                print("No object found within the radius to glow.")
                             end
                         else
-                            target.outline = false
+                            if target.outline then
+                                target.outline = false
+                                local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
+                                if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
+                                    SetEntityDrawOutline(nearestObject, false)
+                                    print("Outline hidden from the nearest object.")
+                                else
+                                    print("No object found within the radius to hide.")
+                                end
+                            else
+                                print("Already Hidden!")
+                            end
                             print("Unglow! Too far!")
                         end
                     end
