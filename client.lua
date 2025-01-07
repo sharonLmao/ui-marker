@@ -60,7 +60,7 @@ function StartShowingMarkers()
                     end
                 end
             end
-            print("Hide Now?", "Hidden Count:", hiddenCount, "Total Count:", totalCount)
+            if Config.debug then print("Hide Now?", "Hidden Count:", hiddenCount, "Total Count:", totalCount) end
             if hiddenCount == totalCount then -- All coordinades are hidden
                 sleep = 1000
             else
