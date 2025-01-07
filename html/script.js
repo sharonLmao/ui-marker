@@ -1,7 +1,10 @@
 let gpsLocations = {};
+let isMoving = false;
 
 addEventListener("message", function (event) {
     if (event.data.action == 'moveMarkers') {
+        isMoving = true;
+        if (isMoving) return;
         const distance = parseFloat(event.data.distance);
         const scaleFactor = 0.17 + (300 - distance) / 300;
         const iconWidth = Math.max(scaleFactor, 0.6);
@@ -46,13 +49,12 @@ addEventListener("message", function (event) {
         }
         let dis = parseFloat(event.data.distance);
         if (dis <= event.data.labeldistance) {
-            gpsLocations[event.data.id].Label.style.display = 'block';
+            if (gpsLocations[event.data.id].Label.style.display != 'block') gpsLocations[event.data.id].Label.style.display = 'block';
         } else {    
-            gpsLocations[event.data.id].Label.style.display = 'none';
+            if (gpsLocations[event.data.id].Label.style.display != 'none') gpsLocations[event.data.id].Label.style.display = 'none';
         }
         if (gpsLocations[event.data.id].onScreen !== event.data.onScreen) {
             if (event.data.onScreen == '1') { // top
-                
                 gpsLocations[event.data.id].rotate = ' rotate(180deg)';
                 gpsLocations[event.data.id].distanceLeft.style.top = 'calc(-100%)'
                 gpsLocations[event.data.id].distanceLeft.style.bottom = 'unset'
@@ -120,6 +122,7 @@ addEventListener("message", function (event) {
         }
         // gpsLocations[event.data.id].gpsIcon.style.width = `${iconWidth}px`;
         // console.log("Icon Width:", `${iconWidth}px`)
+        isMoving = false;
     } else if (event.data.action == 'showAllMarkers') {
         for (const location in gpsLocations) {
             if (location) {

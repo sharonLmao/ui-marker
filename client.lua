@@ -2,7 +2,6 @@ local isDisplaying = true
 local sleep = 0.6
 
 function StartShowingMarkers()
-    Wait(2300)
     local lastXXX = 0
     local lastYYY = 0
     local playerCoords = vector3(0, 0, 0)
@@ -11,7 +10,6 @@ function StartShowingMarkers()
     Citizen.CreateThread(function()
         local delayPlayerPos = 0
         while isDisplaying do
-            Citizen.Wait(sleep)
             delayPlayerPos = delayPlayerPos + 0.6
             if delayPlayerPos >= 60 then
                 delayPlayerPos = 0
@@ -62,11 +60,13 @@ function StartShowingMarkers()
                     end
                 end
             end
+            print("Hide Now?", "Hidden Count:", hiddenCount, "Total Count:", totalCount)
             if hiddenCount == totalCount then -- All coordinades are hidden
                 sleep = 1000
             else
                 sleep = 0.6
             end
+            Citizen.Wait(sleep)
         end
     end)
 end
@@ -79,6 +79,7 @@ Citizen.CreateThread(function()
         end
         Citizen.Wait(500)
     end
+    Wait(2300)
     StartShowingMarkers()
     print("^2UI-MARKER v1.0.0 created by Sharon and Burgil^0")
     print("^3Commands:^0")
@@ -144,7 +145,6 @@ AddEventHandler("ui-marker:client:show-markers", function()
             isDisplaying = true
             StartShowingMarkers()
         end
-        Wait(300)
         SendNUIMessage({ action = "showAllMarkers" })
     end)
 end)
@@ -153,13 +153,12 @@ RegisterNetEvent("ui-marker:client:hide-markers")
 AddEventHandler("ui-marker:client:hide-markers", function()
     Citizen.CreateThread(function()
         if isDisplaying then
-            sleep = 1000
+            sleep = 0.6
             isDisplaying = false
             print("Hide all markers")
             for name, target in pairs(Config.targetCoords) do
                 target.show = false
             end
-            Wait(300)
             SendNUIMessage({ action = "hideAllMarkers" })
         end
     end)
