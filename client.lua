@@ -7,7 +7,7 @@ function StartShowingMarkers()
     local distance = 0
     Citizen.CreateThread(function()
         while isDisplaying do
-            Citizen.Wait(0.3)
+            Citizen.Wait(1000)
             playerCoords = GetEntityCoords(PlayerPedId())
             for name, target in pairs(Config.targetCoords) do
                 if target.hide then
