@@ -134,28 +134,35 @@ end)
 
 RegisterNetEvent("ui-marker:client:show-markers")
 AddEventHandler("ui-marker:client:show-markers", function()
-    sleep = 0.6
-    if not isDisplaying then
-        isDisplaying = true
-        StartShowingMarkers()
-    end
-    SendNUIMessage({ action = "showAllMarkers" })
-    for name, target in pairs(Config.targetCoords) do
-        target.show = true
-    end
-    print("Show all markers")
+    Citizen.CreateThread(function()
+        print("Show all markers")
+        sleep = 0.6
+        for name, target in pairs(Config.targetCoords) do
+            target.show = true
+        end
+        if not isDisplaying then
+            isDisplaying = true
+            StartShowingMarkers()
+        end
+        Wait(300)
+        SendNUIMessage({ action = "showAllMarkers" })
+    end)
 end)
 
 RegisterNetEvent("ui-marker:client:hide-markers")
 AddEventHandler("ui-marker:client:hide-markers", function()
-    if isDisplaying then
-        isDisplaying = false
-        SendNUIMessage({ action = "hideAllMarkers" })
-        print("Hide all markers")
-        for name, target in pairs(Config.targetCoords) do
-            target.show = false
+    Citizen.CreateThread(function()
+        if isDisplaying then
+            sleep = 1000
+            isDisplaying = false
+            print("Hide all markers")
+            for name, target in pairs(Config.targetCoords) do
+                target.show = false
+            end
+            Wait(300)
+            SendNUIMessage({ action = "hideAllMarkers" })
         end
-    end
+    end)
 end)
 
 RegisterNetEvent("ui-marker:client:clean-markers")
