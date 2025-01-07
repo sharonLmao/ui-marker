@@ -116,10 +116,10 @@ addEventListener("message", function (event) {
     } else if (event.data.action == 'cleanAllMarkers') {
         for (const location in gpsLocations) {
             if (location) {
-                gpsLocations[location].moveGPS.style.display = 'none';
+                gpsLocations[location].moveGPS.remove();
             }
         }
-        gpsLocations[location] = {};
+        gpsLocations = {};
     } else if (event.data.action == 'removeSpecificMarker') {
         gpsLocations[event.data.id].moveGPS.remove();
         gpsLocations[event.data.id] = undefined;
