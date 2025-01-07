@@ -128,6 +128,7 @@ AddEventHandler('ui-marker:client:show-marker', function(markerName)
     if Config.targetCoords[markerName] then
         sleep = UPDATE_SPEED
         Config.targetCoords[markerName].show = true
+        Wait(2300)
         SendNUIMessage({ action = "showSpecificMarker", id = markerName })
         print(markerName, "Marker shown!")
     else
