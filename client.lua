@@ -39,12 +39,7 @@ function StartShowingMarkers()
                             local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
                             if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
                                 SetEntityDrawOutline(nearestObject, false)
-                                print("Outline hidden from the nearest object.")
-                            else
-                                print("No object found within the radius to hide.")
                             end
-                        else
-                            print("Already Hidden!")
                         end
                     end
                 else
@@ -59,9 +54,6 @@ function StartShowingMarkers()
                                 target.outline = true
                                 SetEntityDrawOutline(nearestObject, true)
                                 SetEntityDrawOutlineColor(64, 224, 208, 255)
-                                print("Outline applied to the nearest object.")
-                            else
-                                print("No object found within the radius to glow.")
                             end
                         else
                             if target.outline then
@@ -69,12 +61,7 @@ function StartShowingMarkers()
                                 local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
                                 if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
                                     SetEntityDrawOutline(nearestObject, false)
-                                    print("Outline hidden from the nearest object.")
-                                else
-                                    print("No object found within the radius to hide.")
                                 end
-                            else
-                                print("Already Hidden!")
                             end
                         end
                     end
