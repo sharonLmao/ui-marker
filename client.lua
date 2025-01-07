@@ -73,6 +73,8 @@ function StartShowingMarkers()
                     end
                     Citizen.Wait(10)
                 end
+            else
+                Citizen.Wait(sleep)
             end
         end
     end)
