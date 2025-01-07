@@ -103,7 +103,6 @@ RegisterNetEvent('ui-marker:client:show-marker')
 AddEventHandler('ui-marker:client:show-marker', function(markerName)
     if Config.targetCoords[markerName] then
         Config.targetCoords[markerName].showbydefualt = true
-        Config.targetCoords[markerName].hide = false
         SendNUIMessage({ action = "showSpecificMarker", id = markerName })
         print(markerName, "Marker shown!")
     else
@@ -115,7 +114,6 @@ RegisterNetEvent('ui-marker:client:hide-marker')
 AddEventHandler('ui-marker:client:hide-marker', function(markerName)
     if Config.targetCoords[markerName] then
         Config.targetCoords[markerName].showbydefualt = false
-        Config.targetCoords[markerName].hide = true
         SendNUIMessage({ action = "hideSpecificMarker", id = markerName })
         print(markerName, "Marker hidden!")
     else
