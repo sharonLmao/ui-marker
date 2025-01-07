@@ -137,12 +137,6 @@ function StartShowingMarkers()
                     end
                 end
             end
-            -- Delayed speed of 1000 must equal 20 x 50 or be changed accordingly
-            if hiddenCount == totalCount then -- All coordinades are hidden
-                sleep = 1000
-            else
-                sleep = Config.UPDATE_SPEED
-            end
             if sleep == 1000 then
                 for i = 1, 20 do
                     if sleep ~= 1000 then
