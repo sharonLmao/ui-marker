@@ -33,17 +33,19 @@ function StartShowingMarkers()
                         target.hide = false
                     end
                     hiddenCount = hiddenCount + 1
-                    if target.glow_obj and target.outline then
-                        target.outline = false
-                        local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
-                        if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
-                            SetEntityDrawOutline(nearestObject, false)
-                            print("Outline hidden from the nearest object.")
+                    if target.glow_obj then
+                        if target.outline then
+                            target.outline = false
+                            local nearestObject = GetNearestObjectOfHashOnCoords(target.glow_obj, target.coords, Config.GLOW_DISTANCE)
+                            if nearestObject ~= 0 and DoesEntityExist(nearestObject) then
+                                SetEntityDrawOutline(nearestObject, false)
+                                print("Outline hidden from the nearest object.")
+                            else
+                                print("No object found within the radius to hide.")
+                            end
                         else
-                            print("No object found within the radius to hide.")
+                            print("Already Hidden!")
                         end
-                    else
-                        print("Already Hidden!")
                     end
                 else
                     if not target.show then
