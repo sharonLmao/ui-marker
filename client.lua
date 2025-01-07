@@ -9,9 +9,9 @@ function StartShowingMarkers()
         while isDisplaying do
             Citizen.Wait(0)
             playerCoords = GetEntityCoords(PlayerPedId())
-            for name, targetCoords in pairs(Config.targetCoords) do
-                distance = #(playerCoords - targetCoords)
-                local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(targetCoords.x, targetCoords.y, targetCoords.z)
+            for name, target in pairs(Config.targetCoords) do
+                distance = #(playerCoords - target.coords)
+                local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(target.coords.x, target.coords.y, target.coords.z)
                 if onScreen == 1 then -- up
                     yyy = 0
                 end
@@ -30,6 +30,9 @@ function StartShowingMarkers()
                     SendNUIMessage({
                         action = "moveMarkers",
                         id = name,
+                        label = target.label,
+                        labeldistance = target.distance,
+                        showbydefualt = target.showbydefualt,
                         xxx = xxx * 100,
                         yyy = yyy * 100,
                         distance = distance,
@@ -50,6 +53,7 @@ Citizen.CreateThread(function()
         end
         Citizen.Wait(500)
     end
+    Wait(2300)
     StartShowingMarkers()
     print("^2UI-MARKER v1.0.0 created by Sharon and Burgil^0")
     print("^3Commands:^0")

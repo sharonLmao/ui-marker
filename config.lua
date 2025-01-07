@@ -3,8 +3,28 @@ Config = {}
 Config.debug = true
 
 Config.targetCoords = {
-    ["home"] = vector3(2829.993896, 1474.732544, 24.555395),
-    ["test1"] = vector3(2567.234375, 1234.567890, 28.123456),
-    ["test2"] = vector3(2123.456789, 1789.012345, 32.345678),
-    ["test3"] = vector3(2901.234567, 1345.678901, 26.789012)
+    ["home"] = {
+        coords = vector3(2829.993896, 1474.732544, 24.555395),
+        label = "Home",
+        distance = 10.0,
+        showbydefualt = false
+    },
+    ["carrierdoor"] = {
+        coords = vector3(598.093079, -3416.244873, 6.077423),
+        label = "Carrier door",
+        distance = 5.0,
+        showbydefualt = false
+    },
+    ["test2"] = {
+        coords = vector3(2123.456789, 1789.012345, 32.345678),
+        label = "test2",
+        distance = 10.0,
+        showbydefualt = false
+    },
+    ["test3"] = {
+        coords = vector3(2901.234567, 1345.678901, 26.789012),
+        label = "test3",
+        distance = 10.0,
+        showbydefualt = false
+    },
 }

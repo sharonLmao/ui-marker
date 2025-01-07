@@ -7,7 +7,7 @@ addEventListener("message", function (event) {
         const iconWidth = Math.max(scaleFactor, 0.6);
         if (!gpsLocations[event.data.id]) {
             const moveGPS = document.createElement("div");
-            moveGPS.style.display = '';
+            moveGPS.style.display = event.data.showbydefualt ? '' : 'none';
             moveGPS.style.transform = 'translate3d(0vw, 0vh, 0)';
             moveGPS.classList.add("moveGPS");
             const gpsIcon = document.createElement("img");
@@ -20,6 +20,22 @@ addEventListener("message", function (event) {
             distanceLeft.style.right = '-35px';
             distanceLeft.style.top = 'calc(100% + 5px)';
             distanceLeft.classList.add("distanceLeft");
+            const Label = document.createElement("div");
+            Label.style.display = 'none';
+            Label.style.right = '-35px';
+            Label.style.top = 'calc(100% + 20px)';
+            Label.classList.add("marklabel");
+            moveGPS.appendChild(distanceLeft);
+            moveGPS.appendChild(Label);
+            document.body.append(moveGPS);
+            gpsLocations[event.data.id] = {
+                moveGPS: moveGPS,
+                gpsIcon: gpsIcon,
+                distanceLeft: distanceLeft,
+                Label: Label,
+                rotate: '',
+                onScreen: false,
+            }
             /*
             This ^ is the same as this:
             <div style="display: none; transform: translate3d(0vw, 0vh, 0);" id="moveGPS">
@@ -27,18 +43,16 @@ addEventListener("message", function (event) {
                 <div id="distanceLeft" style="right: -35px; top: calc(100% + 5px);"></div>
             </div>
             */
-            moveGPS.appendChild(distanceLeft);
-            document.body.append(moveGPS);
-            gpsLocations[event.data.id] = {
-                moveGPS: moveGPS,
-                gpsIcon: gpsIcon,
-                distanceLeft: distanceLeft,
-                rotate: '',
-                onScreen: false,
-            }
+        }
+        let dis = parseFloat(event.data.distance);
+        if (dis <= event.data.labeldistance) {
+            gpsLocations[event.data.id].Label.style.display = 'block';
+        } else {    
+            gpsLocations[event.data.id].Label.style.display = 'none';
         }
         if (gpsLocations[event.data.id].onScreen !== event.data.onScreen) {
             if (event.data.onScreen == '1') { // top
+                
                 gpsLocations[event.data.id].rotate = ' rotate(180deg)';
                 gpsLocations[event.data.id].distanceLeft.style.top = 'calc(-100%)'
                 gpsLocations[event.data.id].distanceLeft.style.bottom = 'unset'
@@ -98,6 +112,11 @@ addEventListener("message", function (event) {
             gpsLocations[event.data.id].distanceLeft.textContent = event.data.left;
         } else {
             gpsLocations[event.data.id].distanceLeft.textContent = '';
+        } 
+        if (event.data.label) {
+            gpsLocations[event.data.id].Label.textContent = event.data.label;
+        } else {
+            gpsLocations[event.data.id].Label.textContent = '';
         }
         // gpsLocations[event.data.id].gpsIcon.style.width = `${iconWidth}px`;
         // console.log("Icon Width:", `${iconWidth}px`)

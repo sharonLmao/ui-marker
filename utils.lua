@@ -16,16 +16,3 @@ function PrintDistanceToTarget(distance)
         end
     end
 end
-
-function DrawText3D(coords, text)
-    SetDrawOrigin(coords.x, coords.y, coords.z, 0)
-    SetTextScale(0.35, 0.35)
-    SetTextFont(4)
-    SetTextProportional(1)
-    SetTextColour(255, 255, 255, 215)
-    SetTextEntry("STRING")
-    SetTextCentre(1)
-    AddTextComponentString(text)
-    DrawText(0.0, 0.0)
-    ClearDrawOrigin()
-end
