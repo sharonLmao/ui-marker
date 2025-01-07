@@ -38,7 +38,7 @@ addEventListener("message", function (event) {
             }
         }
         if (gpsLocations[event.data.id].onScreen !== event.data.onScreen) {
-            if (event.data.onScreen == '1') { // top
+            if (event.data.onScreen == '1' || gpsLocations[event.data.id]) { // top
                 gpsLocations[event.data.id].rotate = ' rotate(180deg)';
                 gpsLocations[event.data.id].distanceLeft.style.top = 'calc(-100%)'
                 gpsLocations[event.data.id].distanceLeft.style.bottom = 'unset'
@@ -46,7 +46,7 @@ addEventListener("message", function (event) {
                 gpsLocations[event.data.id].distanceLeft.style.right = 'unset'
                 gpsLocations[event.data.id].distanceLeft.style.transform = 'rotate(180deg)'
             }
-            if (event.data.onScreen == '2') { // right
+            if (event.data.onScreen == '2' || gpsLocations[event.data.id]) { // right
                 gpsLocations[event.data.id].rotate = ' rotate(270deg)';
                 gpsLocations[event.data.id].distanceLeft.style.top = 'unset'
                 gpsLocations[event.data.id].distanceLeft.style.bottom = 'calc(100% + 25px)'
@@ -54,7 +54,7 @@ addEventListener("message", function (event) {
                 gpsLocations[event.data.id].distanceLeft.style.right = 'unset'
                 gpsLocations[event.data.id].distanceLeft.style.transform = 'rotate(90deg)'
             }
-            if (event.data.onScreen == '3') { // bottom
+            if (event.data.onScreen == '3' || gpsLocations[event.data.id]) { // bottom
                 gpsLocations[event.data.id].rotate = ' rotate(0deg)';
                 gpsLocations[event.data.id].distanceLeft.style.top = 'calc(-100%)'
                 gpsLocations[event.data.id].distanceLeft.style.bottom = 'unset'
@@ -62,7 +62,7 @@ addEventListener("message", function (event) {
                 gpsLocations[event.data.id].distanceLeft.style.right = 'unset'
                 gpsLocations[event.data.id].distanceLeft.style.transform = 'rotate(0deg)'
             }
-            if (event.data.onScreen == '4') { // left
+            if (event.data.onScreen == '4'|| gpsLocations[event.data.id]) { // left
                 gpsLocations[event.data.id].rotate = 'rotate(90deg)';
                 gpsLocations[event.data.id].distanceLeft.style.top = 'unset'
                 gpsLocations[event.data.id].distanceLeft.style.bottom = 'calc(100% + 25px)'
