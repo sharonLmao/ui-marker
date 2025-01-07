@@ -21,16 +21,16 @@ Config.targetCoords = {
         show = false,
         glow_obj = `lr_prop_supermod_door_01`
     },
+    ["carrierbridge"] = {
+        coords = vector3(485.687592, -3391.977051, 6.620294),
+        label = "Carrier bridge",
+        distance = 5.0,
+        show = false,
+        glow_obj = `po1_03_ramp_011`
+    },
     ["test2"] = {
         coords = vector3(2123.456789, 1789.012345, 32.345678),
         label = "test2",
-        distance = 10.0,
-        show = false,
-        glow_obj = nil
-    },
-    ["test3"] = {
-        coords = vector3(2901.234567, 1345.678901, 26.789012),
-        label = "test3",
         distance = 10.0,
         show = false,
         glow_obj = nil
