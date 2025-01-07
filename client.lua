@@ -15,13 +15,15 @@ function StartShowingMarkers()
                 delayPlayerPos = 0
                 playerCoords = GetEntityCoords(PlayerPedId())
             end
-            local coordsCount = 0
+            local hiddenCount = 0
+            local totalCount = 0
             for name, target in pairs(Config.targetCoords) do
+                totalCount = totalCount + 1
                 if target.hide then
                     if target.showbydefualt then
                         target.hide = false
                     end
-                    coordsCount = coordsCount + 1
+                    hiddenCount = hiddenCount + 1
                 else
                     if not target.showbydefualt then
                         target.hide = true
@@ -58,8 +60,8 @@ function StartShowingMarkers()
                     end
                 end
             end
-            print(coordsCount, #pairs(Config.targetCoords)
-            if coordsCount == #pairs(Config.targetCoords) then -- All coordinades are hidden
+            print(hiddenCount, totalCount)
+            if hiddenCount == totalCount then -- All coordinades are hidden
                 sleep = 1000
             else
                 sleep = 0.6
