@@ -124,6 +124,7 @@ RegisterNetEvent("ui-marker:client:clean-markers")
 AddEventHandler("ui-marker:client:clean-markers", function()
     if isDisplaying then
         isDisplaying = false
+        Config.targetCoords = {}
         SendNUIMessage({ action = "cleanAllMarkers" })
         print("Deleted all markers")
     end
