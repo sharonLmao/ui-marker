@@ -1,6 +1,6 @@
 Config = {}
 
-Config.debug = true
+Config.debug = false
 
 Config.targetCoords = {
     ["home"] = {

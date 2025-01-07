@@ -29,7 +29,8 @@ function StartShowingMarkers()
                         target.hide = true
                     end
                     distance = #(playerCoords - target.coords)
-                    local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(target.coords.x, target.coords.y, target.coords.z)
+                    local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(target.coords.x, target.coords.y,
+                        target.coords.z)
                     if onScreen == 1 then -- up
                         yyy = 0
                     end
@@ -60,7 +61,7 @@ function StartShowingMarkers()
                     end
                 end
             end
-            print("Hide Now?", "Hidden Count:", hiddenCount, "Total Count:", totalCount)
+            if Config.debug then print("Hide Now?", "Hidden Count:", hiddenCount, "Total Count:", totalCount) end
             if hiddenCount == totalCount then -- All coordinades are hidden
                 sleep = 1000
             else
@@ -115,6 +116,7 @@ RegisterNetEvent('ui-marker:client:show-marker')
 AddEventHandler('ui-marker:client:show-marker', function(markerName)
     if Config.targetCoords[markerName] then
         Config.targetCoords[markerName].show = true
+        Wait(2300)
         SendNUIMessage({ action = "showSpecificMarker", id = markerName })
         print(markerName, "Marker shown!")
     else
