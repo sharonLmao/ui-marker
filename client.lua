@@ -76,7 +76,6 @@ function StartShowingMarkers()
                             else
                                 print("Already Hidden!")
                             end
-                            print("Unglow! Too far!")
                         end
                     end
                     local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(target.coords.x, target.coords.y,
