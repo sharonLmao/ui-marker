@@ -1,11 +1,12 @@
 local isDisplaying = true
+local sleep = 0.6
 
 function StartShowingMarkers()
     local lastXXX = 0
     local lastYYY = 0
     local playerCoords = vector3(0, 0, 0)
     local distance = 0
-    local sleep = 0.6
+    sleep = 0.6
     Citizen.CreateThread(function()
         local delayPlayerPos = 0
         while isDisplaying do
@@ -134,6 +135,7 @@ end)
 
 RegisterNetEvent("ui-marker:client:show-markers")
 AddEventHandler("ui-marker:client:show-markers", function()
+    sleep = 0.6
     if not isDisplaying then
         isDisplaying = true
         StartShowingMarkers()
