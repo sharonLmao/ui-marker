@@ -43,35 +43,42 @@ function StartShowingMarkers()
                         target.hide = true
                     end
                     distance = #(playerCoords - target.coords)
-                    local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(target.coords.x, target.coords.y,
-                        target.coords.z)
-                    if onScreen == 1 then -- up
-                        yyy = 0
-                    end
-                    if onScreen == 2 then -- right
-                        xxx = 1
-                    end
-                    if onScreen == 3 then -- down
-                        yyy = 1
-                    end
-                    if onScreen == 4 then -- left
-                        xxx = 0
-                    end
-                    if lastXXX ~= xxx or lastYYY ~= yyy then
-                        lastXXX = xxx
-                        lastYYY = yyy
-                        SendNUIMessage({
-                            action = "moveMarkers",
-                            id = name,
-                            label = target.label,
-                            labeldistance = target.distance,
-                            show = target.show,
-                            xxx = xxx * 100,
-                            yyy = yyy * 100,
-                            distance = distance,
-                            onScreen = onScreen,
-                            left = PrintDistanceToTarget(distance)
-                        })
+                    if target.autoCompleteOnArrival and distance <= target.autoCompleteOnArrival then
+                        if Config.targetCoords[name] then
+                            Config.targetCoords[name] = nil
+                            SendNUIMessage({ action = "removeSpecificMarker", id = name })
+                        end
+                    else
+                        local onScreen, xxx, yyy = GetHudScreenPositionFromWorldPosition(target.coords.x, target.coords.y,
+                            target.coords.z)
+                        if onScreen == 1 then -- up
+                            yyy = 0
+                        end
+                        if onScreen == 2 then -- right
+                            xxx = 1
+                        end
+                        if onScreen == 3 then -- down
+                            yyy = 1
+                        end
+                        if onScreen == 4 then -- left
+                            xxx = 0
+                        end
+                        if lastXXX ~= xxx or lastYYY ~= yyy then
+                            lastXXX = xxx
+                            lastYYY = yyy
+                            SendNUIMessage({
+                                action = "moveMarkers",
+                                id = name,
+                                label = target.label,
+                                labeldistance = target.labelDistance,
+                                show = target.show,
+                                xxx = xxx * 100,
+                                yyy = yyy * 100,
+                                distance = distance,
+                                onScreen = onScreen,
+                                left = PrintDistanceToTarget(distance)
+                            })
+                        end
                     end
                 end
             end
@@ -145,7 +152,7 @@ function StartShowingMarkers()
                     Citizen.Wait(50)
                 end
             else
-                Citizen.Wait(sleep * 4)
+                Citizen.Wait(sleep * 6)
             end
         end
     end)
