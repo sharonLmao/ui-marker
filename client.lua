@@ -20,7 +20,7 @@ function StartShowingMarkers()
                 delayPlayerPos = 0
                 playerCoords = GetEntityCoords(PlayerPedId())
             end
-            Wait(10)
+            Citizen.Wait(100)
         end
     end)
     Citizen.CreateThread(function()
@@ -165,7 +165,7 @@ Citizen.CreateThread(function()
         end
         Citizen.Wait(500)
     end
-    Wait(Config.DELAY_SPEED)
+    Citizen.Wait(Config.DELAY_SPEED)
     StartShowingMarkers()
     print("^2UI-MARKER v1.0.0 created by Sharon and Burgil^0")
     print("^3Commands:^0")
@@ -203,7 +203,7 @@ AddEventHandler('ui-marker:client:show-marker', function(markerName)
     if Config.targetCoords[markerName] then
         sleep = Config.UPDATE_SPEED
         Config.targetCoords[markerName].show = true
-        Wait(Config.DELAY_SPEED)
+        Citizen.Wait(Config.DELAY_SPEED)
         SendNUIMessage({ action = "showSpecificMarker", id = markerName })
         print(markerName, "Marker shown!")
     else
@@ -234,7 +234,7 @@ AddEventHandler("ui-marker:client:show-markers", function()
             isDisplaying = true
             StartShowingMarkers()
         end
-        Wait(Config.DELAY_SPEED)
+        Citizen.Wait(Config.DELAY_SPEED)
         SendNUIMessage({ action = "showAllMarkers" })
     end)
 end)
