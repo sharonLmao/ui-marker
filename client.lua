@@ -1,3 +1,42 @@
+--- Test Glow System:
+
+local objectHash = GetHashKey("lr_prop_supermod_door_01")
+local outlinedObjects = {}
+
+function GetNearestObjectOfHash(hash, playerPed, radius)
+    local pedCoords = GetEntityCoords(playerPed)
+    local object = GetClosestObjectOfType(pedCoords.x, pedCoords.y, pedCoords.z, radius, hash, false, false, false)
+    return object
+end
+
+RegisterCommand("glow", function(source, args)
+    local playerPed = PlayerPedId()
+    local nearestObject = GetNearestObjectOfHash(objectHash, playerPed, 50.0)
+    if nearestObject ~= 0 then
+        SetEntityDrawOutline(nearestObject, true)
+        SetEntityDrawOutlineColor(64, 224, 208, 255)
+        table.insert(outlinedObjects, nearestObject)
+        print("Outline applied to the nearest object.")
+    else
+        print("No object found within the radius.")
+    end
+end, false)
+
+RegisterCommand("unglow", function(source, args)
+    for _, object in ipairs(outlinedObjects) do
+        if DoesEntityExist(object) then
+            SetEntityDrawOutline(object, false)
+        end
+    end
+
+    -- Clear the list of outlined objects
+    outlinedObjects = {}
+    print("Outline removed from all objects.")
+end, false)
+
+
+---
+
 local isDisplaying = true
 local sleep = Config.UPDATE_SPEED
 
