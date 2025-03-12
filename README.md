@@ -10,6 +10,17 @@ This script serves as an optimized replacement for the traditional 3D marker. It
  exports["ui-marker"]:HideMarkers() - to Hide all marker
 ```
 
+# Resmon
+```
+when idle 0.00ms
+when not moving 0.01ms - 0.02ms
+1 markers 0.02ms
+2 markers 0.03ms
+4 markers 0.04ms
+20 markers 0.15ms
+```
+
+
 # Config
 ```
 add waypoints here and use with the exports above
