@@ -2,7 +2,7 @@ Config = {}
 
 Config.debug = false
 
-Config.UPDATE_SPEED = 4.8
+Config.UPDATE_SPEED = 15 -- put it at 0.6 if you dont care about performance
 Config.DELAY_SPEED = 1500
 -- labelDistance must be greater than autoCompleteOnArrival to prevent a bug where the waypoint disappear before the label is shown
 Config.targetCoords = {
